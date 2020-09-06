@@ -1,4 +1,5 @@
 import 'package:recoapp/index.dart';
+import 'package:share/share.dart';
 
 class SettingsScreen extends StatefulWidget {
   @override
@@ -33,11 +34,18 @@ class _SettingsScreenState extends State<SettingsScreen> {
             set('Feedback'),
             set('Help Center'),
             set('Privacy&Policy'),
-            set('Share'),
             ListTile(
               dense: true,
               contentPadding: EdgeInsets.only(left: 0.0, top: 4, bottom: 0),
-              onTap: null,
+              onTap: () {
+                showShare();
+              },
+              title: Text('Share',
+                  style: TextStyle(fontSize: 18.0, color: Color(0Xff5e5e66))),
+            ),
+            ListTile(
+              dense: true,
+              contentPadding: EdgeInsets.only(left: 0.0, top: 4, bottom: 0),
               title: Text('App Version 1.0.0',
                   style: TextStyle(fontSize: 18.0, color: Colors.black45)),
             ),
@@ -67,7 +75,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
           left: 50,
           child: RaisedButton(
               onPressed: () {},
-              color: Colors.lightBlue,
+              color: Theme.of(context).accentColor,
               child: Text(
                 "CREATE ACCOUNT OR SIGN IN",
                 style: TextStyle(color: Colors.white),
@@ -81,9 +89,15 @@ class _SettingsScreenState extends State<SettingsScreen> {
     return ListTile(
       dense: true,
       contentPadding: EdgeInsets.only(left: 0.0, top: 4, bottom: 0),
-      onTap: null,
+      onTap: () {},
       title: Text(label,
           style: TextStyle(fontSize: 18.0, color: Color(0Xff5e5e66))),
     );
+  }
+
+  void showShare() {
+    final RenderBox box = context.findRenderObject();
+    Share.share('Share my App:app link',
+        sharePositionOrigin: box.localToGlobal(Offset.zero) & box.size);
   }
 }

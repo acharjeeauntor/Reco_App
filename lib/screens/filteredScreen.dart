@@ -12,7 +12,10 @@ class _FilteredScreenState extends State<FilteredScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Filter"),
+        title: Text(
+          "Filter",
+//          style: Theme.of(context).textTheme.headline1,
+        ),
         actions: [
           GestureDetector(
             child: Container(
@@ -45,8 +48,10 @@ class _FilteredScreenState extends State<FilteredScreen> {
                   children: [
                     Text(
                       "Price",
-                      style:
-                          TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                      style: TextStyle(
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold,
+                      ),
                     ),
                     SizedBox(
                       height: 10,
@@ -119,7 +124,8 @@ class _FilteredScreenState extends State<FilteredScreen> {
             margin: EdgeInsets.all(20),
             width: MediaQuery.of(context).size.width,
             child: RaisedButton(
-              color: Colors.blueAccent,
+//              color: Colors.blueAccent,
+              color: Theme.of(context).accentColor,
               onPressed: () {},
               child: Text(
                 "Show Results",

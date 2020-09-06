@@ -1,6 +1,6 @@
 import 'package:recoapp/index.dart';
 
-import 'screens/settingsScreen.dart';
+import 'mycolors.dart';
 
 void main() {
   runApp(MyApp());
@@ -14,9 +14,14 @@ class MyApp extends StatelessWidget {
         debugShowCheckedModeBanner: false,
         title: 'Reco App',
         theme: ThemeData(
-          primarySwatch: Colors.blue,
-          visualDensity: VisualDensity.adaptivePlatformDensity,
-        ),
-        home: SafeArea(child: SettingsScreen()));
+            primaryColor: MyColor().appBarColor,
+            accentColor: MyColor().buttonColor,
+            visualDensity: VisualDensity.adaptivePlatformDensity,
+            textTheme: TextTheme(
+              headline1: TextStyle(fontSize: 20.0, fontWeight: FontWeight.bold),
+              headline6: TextStyle(fontSize: 36.0, fontStyle: FontStyle.italic),
+              bodyText2: TextStyle(fontSize: 14.0, fontFamily: 'Hindi'),
+            )),
+        home: SafeArea(child: PrivacyPolicyScreen()));
   }
 }
