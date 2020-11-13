@@ -17,7 +17,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
             Container(
               margin: EdgeInsets.only(top: 20),
               child: Text(
-                "Welcome To APPName",
+                "Welcome To BestProduct",
                 style: TextStyle(
                     fontSize: 25,
                     fontWeight: FontWeight.w700,
