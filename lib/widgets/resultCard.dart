@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:recoapp/index.dart';
 
 class ResultCard extends StatefulWidget {
   String imageUrl =
@@ -43,7 +44,7 @@ class _ResultCardState extends State<ResultCard> {
                   bottom: 35,
                   right: 25,
                   child: Container(
-                    color: Colors.black87,
+                    color: Colors.black54,
                     width: 300,
                     padding: EdgeInsets.symmetric(
                       vertical: 5,
@@ -51,7 +52,10 @@ class _ResultCardState extends State<ResultCard> {
                     ),
                     child: Text(
                       widget.productName,
-                      style: TextStyle(fontSize: 22, color: Colors.white),
+                      style: TextStyle(
+                          fontSize: 22,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.white),
                       softWrap: true,
                       overflow: TextOverflow.fade,
                     ),
@@ -61,7 +65,7 @@ class _ResultCardState extends State<ResultCard> {
                   bottom: 0,
                   right: 25,
                   child: Container(
-                    color: Colors.black87,
+                    color: Colors.black54,
                     width: 300,
                     padding: EdgeInsets.symmetric(
                       vertical: 5,
@@ -90,39 +94,51 @@ class _ResultCardState extends State<ResultCard> {
                       overflow: TextOverflow.fade,
                     ),
                   ),
+                ),
+                Positioned(
+                  bottom: 210,
+                  right: 240,
+                  child: Container(
+                    padding: EdgeInsets.symmetric(horizontal: 10, vertical: 1),
+                    child: Text(
+                      "5 reviews",
+                      style: TextStyle(fontSize: 13, color: Colors.white),
+                      softWrap: true,
+                      overflow: TextOverflow.fade,
+                    ),
+                  ),
                 )
               ],
             ),
             Padding(
               padding: const EdgeInsets.all(20.0),
               child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: <Widget>[
                   Row(
                     children: <Widget>[
-                      Icon(Icons.schedule),
-                      SizedBox(
-                        width: 6,
+                      Text(
+                        "100 BDT",
+                        style: TextStyle(
+                            fontWeight: FontWeight.w800,
+                            fontSize: 18,
+                            color: Colors.green),
                       ),
-                      Text("100"),
                     ],
                   ),
                   Row(
                     children: <Widget>[
-                      Icon(Icons.work),
+                      Text(
+                        'View Deal',
+                        style: TextStyle(
+                            fontWeight: FontWeight.w800,
+                            fontSize: 17,
+                            color: Colors.black87),
+                      ),
                       SizedBox(
                         width: 6,
                       ),
-                      Text('complexityText'),
-                    ],
-                  ),
-                  Row(
-                    children: <Widget>[
-                      Icon(Icons.attach_money),
-                      SizedBox(
-                        width: 6,
-                      ),
-                      Text('Deal'),
+                      Icon(Icons.arrow_forward_ios),
                     ],
                   )
                 ],
