@@ -104,6 +104,13 @@ class _FilteredScreenState extends State<FilteredScreen> {
                           TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
                     ),
                     SizedBox(
+                      height: 10,
+                    ),
+                    Container(
+                      child: Text('Selected: $rating+'),
+                      margin: EdgeInsets.only(left: 10),
+                    ),
+                    SizedBox(
                       height: 15,
                     ),
                     Row(
@@ -114,25 +121,31 @@ class _FilteredScreenState extends State<FilteredScreen> {
                         ratting(context, Colors.deepOrangeAccent, 7),
                         ratting(context, Colors.orangeAccent, 10),
                       ],
-                    )
+                    ),
                   ],
                 ),
               ),
             ),
           ),
           Container(
-            margin: EdgeInsets.all(20),
+            margin: EdgeInsets.all(25),
             width: MediaQuery.of(context).size.width,
             child: RaisedButton(
-//              color: Colors.blueAccent,
               color: Theme.of(context).accentColor,
-              onPressed: () {},
-              child: Text(
-                "Show Results",
-                style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 15,
-                    fontWeight: FontWeight.bold),
+              onPressed: () {
+                print("Rating:$rating");
+                print("Price:$price");
+                Navigator.pop(context);
+              },
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Text(
+                  "Show Results",
+                  style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 17,
+                      fontWeight: FontWeight.bold),
+                ),
               ),
             ),
           ),
