@@ -1,5 +1,5 @@
 import 'package:recoapp/index.dart';
-import 'package:recoapp/screens/mainScreen.dart';
+import 'package:recoapp/screens/SearchScreen.dart';
 
 import 'mycolors.dart';
 
@@ -24,6 +24,6 @@ class MyApp extends StatelessWidget {
               bodyText2: TextStyle(fontSize: 14.0, fontFamily: 'Hindi'),
             )),
 //        home: SafeArea(child: InternetConnectionCheck()));
-        home: SafeArea(child: MainScreen()));
+        home: SafeArea(child: SearchScreen()));
   }
 }
