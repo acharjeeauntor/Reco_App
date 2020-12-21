@@ -1,3 +1,5 @@
+import 'package:autocomplete_textfield/autocomplete_textfield.dart';
+import 'package:dropdownfield/dropdownfield.dart';
 import 'package:flutter/material.dart';
 import 'package:recoapp/index.dart';
 
@@ -7,10 +9,16 @@ class Searchcard extends StatefulWidget {
 }
 
 class _SearchcardState extends State<Searchcard> {
+  var _suggestionTextFieldController = new TextEditingController();
+  var _categoryController = TextEditingController();
+  String selectCategory = "";
+  List suggestionsList = ['auntor', "au", 'Oppo', 'Radmi'];
+  List<String> category = ['Mobile', 'Tab', 'Electronic'];
+
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: MediaQuery.of(context).size.height * 0.3,
+      height: MediaQuery.of(context).size.height * 0.4,
       width: MediaQuery.of(context).size.width * 0.9,
       decoration: BoxDecoration(
         color: Colors.white,
@@ -26,25 +34,96 @@ class _SearchcardState extends State<Searchcard> {
       ),
       child: Padding(
         padding: const EdgeInsets.all(8.0),
-        child: Column(
-          children: [
-            DropdownButton(items: null, onChanged: null),
-            TextFormField(),
-            RaisedButton(
-              textColor: Colors.white,
-              elevation: 5,
-              color: Colors.green,
-              onPressed: () {
-                print("Search");
-              },
-              child: Text(
-                "Search Product",
-                style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+        child: SingleChildScrollView(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: [
+              categoryDropdown(),
+              SizedBox(
+                height: 20,
               ),
-            ),
-          ],
+              productInputField(),
+              SizedBox(
+                height: 20,
+              ),
+              searchButton(context)
+            ],
+          ),
         ),
       ),
     );
+  }
+
+  DropDownField categoryDropdown() {
+    return DropDownField(
+      controller: _categoryController,
+      onValueChanged: (dynamic value) {
+        _categoryController = value;
+      },
+      value: _categoryController.text,
+      required: false,
+      hintText: 'Choose a category',
+      items: category,
+      enabled: true,
+      itemsVisibleInDropdown: 5,
+    );
+  }
+
+  GestureDetector searchButton(BuildContext context) {
+    return GestureDetector(
+      onTap: () {
+        print(_categoryController.text);
+        print(_suggestionTextFieldController.text);
+        print("Search");
+      },
+      child: Container(
+        margin: EdgeInsets.only(left: 10, right: 10),
+        height: MediaQuery.of(context).size.height * 0.07,
+        width: double.infinity,
+        decoration: BoxDecoration(
+            color: Colors.blueAccent, borderRadius: BorderRadius.circular(8.0)),
+        child: Center(
+            child: Text(
+          "Search Product",
+          style: TextStyle(
+              fontSize: 17, color: Colors.white, fontWeight: FontWeight.w600),
+        )),
+      ),
+    );
+  }
+
+  AutoCompleteTextField productInputField() {
+    return AutoCompleteTextField(
+        clearOnSubmit: false,
+        controller: _suggestionTextFieldController,
+        style: TextStyle(color: Colors.black87, fontSize: 17.0),
+        decoration: InputDecoration(
+            hintText: 'Search Product Here....',
+            border:
+                OutlineInputBorder(borderRadius: BorderRadius.circular(10.0))),
+        itemSubmitted: (item) {
+          _suggestionTextFieldController.text = item;
+        },
+        key: null,
+        suggestions: suggestionsList,
+        itemBuilder: (context, item) {
+          return Container(
+            padding: EdgeInsets.all(14.0),
+            child: Row(
+              children: [
+                Text(
+                  item,
+                  style: TextStyle(color: Colors.black),
+                ),
+              ],
+            ),
+          );
+        },
+        itemSorter: (a, b) {
+          return a.compareTo(b);
+        },
+        itemFilter: (item, query) {
+          return item.toLowerCase().startsWith(query.toLowerCase());
+        });
   }
 }
