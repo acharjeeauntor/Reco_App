@@ -36,7 +36,7 @@ class _MainScreen extends State<MainScreen> {
         body: Column(
       children: [
         Padding(
-          padding: const EdgeInsets.all(8.0),
+          padding: const EdgeInsets.only(top: 25.0, left: 10.0, right: 10.0),
           child: Container(
             height: MediaQuery.of(context).size.height * 0.15,
             width: double.infinity,
@@ -51,44 +51,47 @@ class _MainScreen extends State<MainScreen> {
                   ),
                 ],
                 borderRadius: BorderRadius.circular(0.6)),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-              children: [
-                Text(
-                  "Product name",
-                  style: TextStyle(
-                      color: Colors.green,
-                      fontWeight: FontWeight.w700,
-                      fontSize: 20),
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
-                    FlatButton.icon(
-                        onPressed: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => FilteredScreen()),
-                          );
-                        },
-                        icon: Icon(Icons.ac_unit),
-                        label: Text('Filter',
-                            style: TextStyle(
-                                color: Colors.redAccent,
-                                fontWeight: FontWeight.w600,
-                                fontSize: 20))),
-                    FlatButton.icon(
-                        onPressed: () => _pressedSortButton(),
-                        icon: Icon(Icons.ac_unit),
-                        label: Text('Sort',
-                            style: TextStyle(
-                                color: Colors.blueAccent,
-                                fontWeight: FontWeight.w600,
-                                fontSize: 20)))
-                  ],
-                )
-              ],
+            child: Padding(
+              padding: const EdgeInsets.only(top: 18.0),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  Text(
+                    "Product name",
+                    style: TextStyle(
+                        color: Colors.green,
+                        fontWeight: FontWeight.w700,
+                        fontSize: 20),
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      FlatButton.icon(
+                          onPressed: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => FilteredScreen()),
+                            );
+                          },
+                          icon: Icon(Icons.ac_unit),
+                          label: Text('Filter',
+                              style: TextStyle(
+                                  color: Colors.redAccent,
+                                  fontWeight: FontWeight.w600,
+                                  fontSize: 20))),
+                      FlatButton.icon(
+                          onPressed: () => _pressedSortButton(),
+                          icon: Icon(Icons.ac_unit),
+                          label: Text('Sort',
+                              style: TextStyle(
+                                  color: Colors.blueAccent,
+                                  fontWeight: FontWeight.w600,
+                                  fontSize: 20)))
+                    ],
+                  )
+                ],
+              ),
             ),
           ),
         ),

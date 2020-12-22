@@ -2,6 +2,7 @@ import 'package:autocomplete_textfield/autocomplete_textfield.dart';
 import 'package:dropdownfield/dropdownfield.dart';
 import 'package:flutter/material.dart';
 import 'package:recoapp/index.dart';
+import 'package:recoapp/screens/mainScreen.dart';
 
 class Searchcard extends StatefulWidget {
   @override
@@ -18,7 +19,7 @@ class _SearchcardState extends State<Searchcard> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: MediaQuery.of(context).size.height * 0.4,
+      height: MediaQuery.of(context).size.height * 0.35,
       width: MediaQuery.of(context).size.width * 0.9,
       decoration: BoxDecoration(
         color: Colors.white,
@@ -75,6 +76,10 @@ class _SearchcardState extends State<Searchcard> {
         print(_categoryController.text);
         print(_suggestionTextFieldController.text);
         print("Search");
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => MainScreen()),
+        );
       },
       child: Container(
         margin: EdgeInsets.only(left: 10, right: 10),

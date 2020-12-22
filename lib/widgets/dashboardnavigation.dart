@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:recoapp/screens/SearchScreen.dart';
-import 'package:recoapp/screens/favouriteScreen.dart';
 import 'package:recoapp/screens/settingsScreen.dart';
 
 class DashboardNavigation extends StatefulWidget {
@@ -13,7 +12,6 @@ class DashboardNavigation extends StatefulWidget {
 class _DashboardNavigationState extends State<DashboardNavigation> {
   final List<Map<String, Object>> _pages = [
     {'page': SearchScreen(), 'title': 'Search'},
-    {'page': FavouriteScreen(), 'title': 'Favourite'},
     {'page': SettingsScreen(), 'title': 'Settings'},
   ];
 
@@ -39,9 +37,6 @@ class _DashboardNavigationState extends State<DashboardNavigation> {
           items: [
             BottomNavigationBarItem(
                 icon: const Icon(Icons.search), title: const Text('Search')),
-            BottomNavigationBarItem(
-                icon: const Icon(Icons.favorite),
-                title: const Text('Favourite')),
             BottomNavigationBarItem(
                 icon: const Icon(Icons.settings), title: const Text('Setting'))
           ]),

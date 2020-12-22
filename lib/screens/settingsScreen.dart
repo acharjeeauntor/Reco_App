@@ -31,9 +31,43 @@ class _SettingsScreenState extends State<SettingsScreen> {
             SizedBox(
               height: 20,
             ),
-            set('Feedback'),
-            set('Help Center'),
-            set('Privacy&Policy'),
+            ListTile(
+              dense: true,
+              contentPadding: EdgeInsets.only(left: 0.0, top: 4, bottom: 0),
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => FeedbackScreen()),
+                );
+              },
+              title: Text('Feedback',
+                  style: TextStyle(fontSize: 18.0, color: Color(0Xff5e5e66))),
+            ),
+            ListTile(
+              dense: true,
+              contentPadding: EdgeInsets.only(left: 0.0, top: 4, bottom: 0),
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => HelpCenterScreen()),
+                );
+              },
+              title: Text('Help Center',
+                  style: TextStyle(fontSize: 18.0, color: Color(0Xff5e5e66))),
+            ),
+            ListTile(
+              dense: true,
+              contentPadding: EdgeInsets.only(left: 0.0, top: 4, bottom: 0),
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => PrivacyPolicyScreen()),
+                );
+              },
+              title: Text('Private & Policy',
+                  style: TextStyle(fontSize: 18.0, color: Color(0Xff5e5e66))),
+            ),
             ListTile(
               dense: true,
               contentPadding: EdgeInsets.only(left: 0.0, top: 4, bottom: 0),
@@ -82,16 +116,6 @@ class _SettingsScreenState extends State<SettingsScreen> {
               )),
         ),
       ],
-    );
-  }
-
-  Widget set(String label) {
-    return ListTile(
-      dense: true,
-      contentPadding: EdgeInsets.only(left: 0.0, top: 4, bottom: 0),
-      onTap: () {},
-      title: Text(label,
-          style: TextStyle(fontSize: 18.0, color: Color(0Xff5e5e66))),
     );
   }
 
