@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:recoapp/index.dart';
+import 'package:recoapp/providers/appData.dart';
 import 'package:recoapp/widgets/resultCard.dart';
 
 class MainScreen extends StatefulWidget {
@@ -13,6 +15,7 @@ class _MainScreen extends State<MainScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final appDataProvider = Provider.of<AppData>(context, listen: false);
     void _pressedSortButton() {
       showModalBottomSheet(
           context: context,
@@ -57,7 +60,7 @@ class _MainScreen extends State<MainScreen> {
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
                   Text(
-                    "Product name",
+                    appDataProvider.searchProductName,
                     style: TextStyle(
                         color: Colors.green,
                         fontWeight: FontWeight.w700,
@@ -95,15 +98,26 @@ class _MainScreen extends State<MainScreen> {
             ),
           ),
         ),
-        Expanded(
-          child: ListView.builder(
-              scrollDirection: Axis.vertical,
-              shrinkWrap: true,
-              physics: ScrollPhysics(),
-              itemCount: 2,
-              itemBuilder: (BuildContext context, int index) {
-                return ResultCard();
-              }),
+        Consumer<AppData>(
+          builder: (context, products, ch) {
+            return Expanded(
+              child: ListView.builder(
+                  scrollDirection: Axis.vertical,
+                  shrinkWrap: true,
+                  physics: ScrollPhysics(),
+                  itemCount: products.productsList.length,
+                  itemBuilder: (BuildContext context, int index) {
+                    return ResultCard({
+                      products.productsList[index].siteImageUrl,
+                      products.productsList[index].itemName,
+                      products.productsList[index].productUrl,
+                      products.productsList[index].site,
+                      products.productsList[index].price.toString(),
+                      products.productsList[index].rating.toString()
+                    });
+                  }),
+            );
+          },
         )
       ],
     ));

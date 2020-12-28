@@ -9,7 +9,7 @@ String productsToJson(List<Products> data) =>
 class Products {
   Products({
     this.itemName,
-    this.categoryname,
+    this.siteImageUrl,
     this.price,
     this.rating,
     this.productUrl,
@@ -17,7 +17,7 @@ class Products {
   });
 
   String itemName;
-  String categoryname;
+  String siteImageUrl;
   int price;
   int rating;
   String productUrl;
@@ -25,7 +25,7 @@ class Products {
 
   factory Products.fromJson(Map<String, dynamic> json) => Products(
         itemName: json["item_name"],
-        categoryname: json["categoryname"],
+        siteImageUrl: json["site_image_url"],
         price: json["price"],
         rating: json["rating"],
         productUrl: json["Product_url"],
@@ -34,7 +34,7 @@ class Products {
 
   Map<String, dynamic> toJson() => {
         "item_name": itemName,
-        "categoryname": categoryname,
+        "site_image_url": siteImageUrl,
         "price": price,
         "rating": rating,
         "Product_url": productUrl,

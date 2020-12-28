@@ -2,14 +2,22 @@ import 'package:flutter/material.dart';
 import 'package:recoapp/index.dart';
 
 class ResultCard extends StatefulWidget {
-  String imageUrl =
-      'https://upload.wikimedia.org/wikipedia/commons/thumb/2/20/Spaghetti_Bolognese_mit_Parmesan_oder_Grana_Padano.jpg/800px-Spaghetti_Bolognese_mit_Parmesan_oder_Grana_Padano.jpg';
-  String productName = "abc";
-  String productUrl = "y";
-  String websiteName = "web";
-  double price = 12.5;
-  double rating = 10.2;
+  String imageUrl = '';
+  String productName = "";
+  String productUrl = "";
+  String websiteName = "";
+  double price;
+  double rating;
   int review = 12;
+
+  ResultCard(Set<String> set,
+      {this.imageUrl,
+      this.productName,
+      this.productUrl,
+      this.websiteName,
+      this.price,
+      this.rating,
+      this.review});
 
   @override
   _ResultCardState createState() => _ResultCardState();

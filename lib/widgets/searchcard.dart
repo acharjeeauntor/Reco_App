@@ -1,7 +1,9 @@
 import 'package:autocomplete_textfield/autocomplete_textfield.dart';
 import 'package:dropdownfield/dropdownfield.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:recoapp/index.dart';
+import 'package:recoapp/providers/appData.dart';
 import 'package:recoapp/screens/mainScreen.dart';
 
 class Searchcard extends StatefulWidget {
@@ -71,8 +73,10 @@ class _SearchcardState extends State<Searchcard> {
   }
 
   GestureDetector searchButton(BuildContext context) {
+    final appDataProvider = Provider.of<AppData>(context, listen: false);
     return GestureDetector(
       onTap: () {
+        appDataProvider.addProductName(_suggestionTextFieldController.text);
         print(_categoryController.text);
         print(_suggestionTextFieldController.text);
         print("Search");
