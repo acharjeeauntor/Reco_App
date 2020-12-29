@@ -12,14 +12,18 @@ class Searchcard extends StatefulWidget {
 }
 
 class _SearchcardState extends State<Searchcard> {
-  var _suggestionTextFieldController = new TextEditingController();
-  var _categoryController = TextEditingController();
-  String selectCategory = "";
-  List suggestionsList = ['auntor', "au", 'Oppo', 'Radmi'];
-  List<String> category = ['Mobile', 'Tab', 'Electronic'];
+  TextEditingController _suggestionTextFieldController =
+      new TextEditingController();
+  TextEditingController _categoryController = new TextEditingController();
+
+  //String selectCategory = "";
+  //List<String> suggestionsList1 = ['auntor', "au", 'Oppo', 'Radmi'];
+  //List<String> suggestionsList;
+  //List<String> category = ['Mobile', 'Tab', 'Electronic'];
 
   @override
   Widget build(BuildContext context) {
+    final appDataProvider = Provider.of<AppData>(context, listen: true);
     return Container(
       height: MediaQuery.of(context).size.height * 0.35,
       width: MediaQuery.of(context).size.width * 0.9,
@@ -41,7 +45,7 @@ class _SearchcardState extends State<Searchcard> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
-              categoryDropdown(),
+              categoryDropdown(appDataProvider),
               SizedBox(
                 height: 20,
               ),
@@ -57,18 +61,22 @@ class _SearchcardState extends State<Searchcard> {
     );
   }
 
-  DropDownField categoryDropdown() {
+  DropDownField categoryDropdown(AppData appDataProvider) {
+    //print(appDataProvider.categoryList.length);
     return DropDownField(
       controller: _categoryController,
       onValueChanged: (dynamic value) {
+        appDataProvider.fetchProductForHint(value);
+        //suggestionsList = appDataProvider.hintProductsList;
+        //print(suggestionsList);
         _categoryController = value;
       },
       value: _categoryController.text,
       required: false,
       hintText: 'Choose a category',
-      items: category,
+      items: appDataProvider.categoryList,
       enabled: true,
-      itemsVisibleInDropdown: 5,
+      itemsVisibleInDropdown: appDataProvider.categoryList.length,
     );
   }
 
@@ -76,7 +84,9 @@ class _SearchcardState extends State<Searchcard> {
     final appDataProvider = Provider.of<AppData>(context, listen: false);
     return GestureDetector(
       onTap: () {
-        appDataProvider.fetchProducts(pName:_suggestionTextFieldController.text,category:_categoryController.text);
+        appDataProvider.fetchProducts(
+            pName: _suggestionTextFieldController.text,
+            category: _categoryController.text);
         appDataProvider.addProductName(_suggestionTextFieldController.text);
 //        print(_categoryController.text);
 //        print(_suggestionTextFieldController.text);
@@ -106,6 +116,8 @@ class _SearchcardState extends State<Searchcard> {
   }
 
   AutoCompleteTextField productInputField() {
+    final appDataProvider = Provider.of<AppData>(context, listen: false);
+    print("productInputField ${appDataProvider.hintProductsList}");
     return AutoCompleteTextField(
         clearOnSubmit: false,
         controller: _suggestionTextFieldController,
@@ -118,7 +130,7 @@ class _SearchcardState extends State<Searchcard> {
           _suggestionTextFieldController.text = item;
         },
         key: null,
-        suggestions: suggestionsList,
+        suggestions: [...appDataProvider.hintProductsList],
         itemBuilder: (context, item) {
           return Container(
             padding: EdgeInsets.all(14.0),

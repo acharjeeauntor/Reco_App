@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:recoapp/providers/appData.dart';
 import 'package:recoapp/screens/SearchScreen.dart';
 import 'package:recoapp/screens/settingsScreen.dart';
 
@@ -10,6 +12,15 @@ class DashboardNavigation extends StatefulWidget {
 }
 
 class _DashboardNavigationState extends State<DashboardNavigation> {
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    final appDataProvider = Provider.of<AppData>(context, listen: false);
+    appDataProvider.fetchCategory();
+    print("fetchCategory work");
+  }
+
   final List<Map<String, Object>> _pages = [
     {'page': SearchScreen(), 'title': 'Search'},
     {'page': SettingsScreen(), 'title': 'Settings'},
