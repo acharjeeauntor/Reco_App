@@ -16,6 +16,8 @@ class _MainScreen extends State<MainScreen> {
   @override
   Widget build(BuildContext context) {
     final appDataProvider = Provider.of<AppData>(context, listen: false);
+
+
     void _pressedSortButton() {
       showModalBottomSheet(
           context: context,
@@ -37,7 +39,9 @@ class _MainScreen extends State<MainScreen> {
 
     return Scaffold(
         body: Column(
+
       children: [
+        Icon(Icons.arrow_back),
         Padding(
           padding: const EdgeInsets.only(top: 25.0, left: 10.0, right: 10.0),
           child: Container(

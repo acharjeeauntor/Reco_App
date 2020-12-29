@@ -76,9 +76,13 @@ class _SearchcardState extends State<Searchcard> {
     final appDataProvider = Provider.of<AppData>(context, listen: false);
     return GestureDetector(
       onTap: () {
+        appDataProvider.fetchProducts(pName:_suggestionTextFieldController.text,category:_categoryController.text);
         appDataProvider.addProductName(_suggestionTextFieldController.text);
-        print(_categoryController.text);
-        print(_suggestionTextFieldController.text);
+//        print(_categoryController.text);
+//        print(_suggestionTextFieldController.text);
+        _categoryController.clear();
+        _suggestionTextFieldController.clear();
+
         print("Search");
         Navigator.push(
           context,
