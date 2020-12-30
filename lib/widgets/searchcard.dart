@@ -1,6 +1,6 @@
-import 'package:autocomplete_textfield/autocomplete_textfield.dart';
 import 'package:dropdownfield/dropdownfield.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_typeahead/flutter_typeahead.dart';
 import 'package:provider/provider.dart';
 import 'package:recoapp/index.dart';
 import 'package:recoapp/providers/appData.dart';
@@ -12,71 +12,92 @@ class Searchcard extends StatefulWidget {
 }
 
 class _SearchcardState extends State<Searchcard> {
-  TextEditingController _suggestionTextFieldController =
-      new TextEditingController();
   TextEditingController _categoryController = new TextEditingController();
 
-  //String selectCategory = "";
-  //List<String> suggestionsList1 = ['auntor', "au", 'Oppo', 'Radmi'];
-  //List<String> suggestionsList;
-  //List<String> category = ['Mobile', 'Tab', 'Electronic'];
+  String _selectProduct = "";
 
   @override
   Widget build(BuildContext context) {
-    final appDataProvider = Provider.of<AppData>(context, listen: true);
-    return Container(
-      height: MediaQuery.of(context).size.height * 0.35,
-      width: MediaQuery.of(context).size.width * 0.9,
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(10),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.grey.withOpacity(0.5),
-            spreadRadius: 2,
-            blurRadius: 3,
-            offset: Offset(0, 3), // changes position of shadow
-          ),
-        ],
-      ),
-      child: Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: SingleChildScrollView(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: [
-              categoryDropdown(appDataProvider),
-              SizedBox(
-                height: 20,
+    //final appDataProvider = Provider.of<AppData>(context, listen: false);
+    return Consumer<AppData>(
+      builder: (context, appData, ch) {
+        return Container(
+          height: MediaQuery.of(context).size.height * 0.35,
+          width: MediaQuery.of(context).size.width * 0.9,
+          decoration: BoxDecoration(
+            color: Colors.white,
+            borderRadius: BorderRadius.circular(10),
+            boxShadow: [
+              BoxShadow(
+                color: Colors.grey.withOpacity(0.5),
+                spreadRadius: 2,
+                blurRadius: 3,
+                offset: Offset(0, 3), // changes position of shadow
               ),
-              productInputField(),
-              SizedBox(
-                height: 20,
-              ),
-              searchButton(context)
             ],
           ),
-        ),
-      ),
+          child: Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: SingleChildScrollView(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  categoryDropdown(appData),
+                  SizedBox(
+                    height: 20,
+                  ),
+                  TypeAheadField(
+                    textFieldConfiguration: TextFieldConfiguration(
+                        autofocus: true,
+                        style: DefaultTextStyle.of(context)
+                            .style
+                            .copyWith(fontStyle: FontStyle.italic),
+                        decoration:
+                            InputDecoration(border: OutlineInputBorder())),
+                    suggestionsCallback: (pattern) async {
+                      //print("pattern $pattern");
+                      return appData.fetchProductFromPattern(pattern);
+                    },
+                    itemBuilder: (context, suggestion) {
+                      return ListTile(
+                        title: Text(suggestion),
+                      );
+                    },
+                    onSuggestionSelected: (suggestion) {
+                      setState(() {
+                        _selectProduct = suggestion;
+                      });
+                    },
+                  ),
+                  SizedBox(
+                    height: 20,
+                  ),
+                  searchButton(context)
+                ],
+              ),
+            ),
+          ),
+        );
+      },
     );
   }
 
-  DropDownField categoryDropdown(AppData appDataProvider) {
+  DropDownField categoryDropdown(AppData appData) {
     //print(appDataProvider.categoryList.length);
     return DropDownField(
       controller: _categoryController,
       onValueChanged: (dynamic value) {
-        appDataProvider.fetchProductForHint(value);
-        //suggestionsList = appDataProvider.hintProductsList;
-        //print(suggestionsList);
+        appData.fetchProductForHint(value);
+        //suggestionsList = [...appDataProvider.hintProductsList];
+
         _categoryController = value;
       },
       value: _categoryController.text,
       required: false,
       hintText: 'Choose a category',
-      items: appDataProvider.categoryList,
+      items: appData.categoryList,
       enabled: true,
-      itemsVisibleInDropdown: appDataProvider.categoryList.length,
+      itemsVisibleInDropdown: appData.categoryList.length,
     );
   }
 
@@ -85,13 +106,13 @@ class _SearchcardState extends State<Searchcard> {
     return GestureDetector(
       onTap: () {
         appDataProvider.fetchProducts(
-            pName: _suggestionTextFieldController.text,
+            pName: _selectProduct.toString(),
             category: _categoryController.text);
-        appDataProvider.addProductName(_suggestionTextFieldController.text);
+        appDataProvider.addProductName(_selectProduct.toString());
 //        print(_categoryController.text);
 //        print(_suggestionTextFieldController.text);
         _categoryController.clear();
-        _suggestionTextFieldController.clear();
+        _selectProduct = "";
 
         print("Search");
         Navigator.push(
@@ -113,42 +134,5 @@ class _SearchcardState extends State<Searchcard> {
         )),
       ),
     );
-  }
-
-  AutoCompleteTextField productInputField() {
-    final appDataProvider = Provider.of<AppData>(context, listen: false);
-    print("productInputField ${appDataProvider.hintProductsList}");
-    return AutoCompleteTextField(
-        clearOnSubmit: false,
-        controller: _suggestionTextFieldController,
-        style: TextStyle(color: Colors.black87, fontSize: 17.0),
-        decoration: InputDecoration(
-            hintText: 'Search Product Here....',
-            border:
-                OutlineInputBorder(borderRadius: BorderRadius.circular(10.0))),
-        itemSubmitted: (item) {
-          _suggestionTextFieldController.text = item;
-        },
-        key: null,
-        suggestions: [...appDataProvider.hintProductsList],
-        itemBuilder: (context, item) {
-          return Container(
-            padding: EdgeInsets.all(14.0),
-            child: Row(
-              children: [
-                Text(
-                  item,
-                  style: TextStyle(color: Colors.black),
-                ),
-              ],
-            ),
-          );
-        },
-        itemSorter: (a, b) {
-          return a.compareTo(b);
-        },
-        itemFilter: (item, query) {
-          return item.toLowerCase().startsWith(query.toLowerCase());
-        });
   }
 }

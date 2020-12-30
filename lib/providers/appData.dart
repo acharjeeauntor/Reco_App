@@ -108,4 +108,18 @@ class AppData with ChangeNotifier {
   List<String> get hintProductsList {
     return [..._hintProductsList];
   }
+
+  //Product List for typeahead pattern
+  fetchProductFromPattern(String word) {
+//    print("hint");
+//    print(_hintProductsList);
+    List<String> patternProduct = [];
+    for (String item in _hintProductsList) {
+      //print("item $item");
+      if (item.contains(word)) {
+        patternProduct.add(item);
+      }
+    }
+    return patternProduct;
+  }
 }
