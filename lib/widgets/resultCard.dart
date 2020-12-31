@@ -10,14 +10,8 @@ class ResultCard extends StatefulWidget {
   double rating;
   int review = 12;
 
-  ResultCard(Set<String> set,
-      {this.imageUrl,
-      this.productName,
-      this.productUrl,
-      this.websiteName,
-      this.price,
-      this.rating,
-      this.review});
+  ResultCard(this.imageUrl, this.productName, this.productUrl, this.websiteName,
+      this.price, this.rating, this.review);
 
   @override
   _ResultCardState createState() => _ResultCardState();

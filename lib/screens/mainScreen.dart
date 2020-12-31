@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:recoapp/index.dart';
 import 'package:recoapp/providers/appData.dart';
-import 'package:recoapp/widgets/resultCard.dart';
 
 class MainScreen extends StatefulWidget {
   @override
@@ -39,9 +38,8 @@ class _MainScreen extends State<MainScreen> {
     return Scaffold(
         body: Column(
       children: [
-        Icon(Icons.arrow_back),
         Padding(
-          padding: const EdgeInsets.only(top: 25.0, left: 10.0, right: 10.0),
+          padding: const EdgeInsets.only(top: 30.0, left: 10.0, right: 10.0),
           child: Container(
             height: MediaQuery.of(context).size.height * 0.15,
             width: double.infinity,
@@ -56,20 +54,33 @@ class _MainScreen extends State<MainScreen> {
                   ),
                 ],
                 borderRadius: BorderRadius.circular(0.6)),
-            child: Padding(
-              padding: const EdgeInsets.only(top: 18.0),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                  Text(
+            child: Stack(
+              children: [
+                Positioned(
+                    top: 10,
+                    left: 10,
+                    child: GestureDetector(
+                      child: Icon(Icons.arrow_back),
+                      onTap: () {
+                        Navigator.pop(context);
+                      },
+                    )),
+                Positioned(
+                  top: 15,
+                  right: 160,
+                  child: Text(
                     appDataProvider.searchProductName,
                     style: TextStyle(
                         color: Colors.green,
                         fontWeight: FontWeight.w700,
                         fontSize: 20),
                   ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                ),
+                Positioned(
+                  bottom: 5,
+                  right: 100,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       FlatButton.icon(
                           onPressed: () {
@@ -94,9 +105,9 @@ class _MainScreen extends State<MainScreen> {
                                   fontWeight: FontWeight.w600,
                                   fontSize: 20)))
                     ],
-                  )
-                ],
-              ),
+                  ),
+                )
+              ],
             ),
           ),
         ),
@@ -109,14 +120,146 @@ class _MainScreen extends State<MainScreen> {
                   physics: ScrollPhysics(),
                   itemCount: products.productsList.length,
                   itemBuilder: (BuildContext context, int index) {
-                    return ResultCard({
-                      products.productsList[index].siteImageUrl,
-                      products.productsList[index].itemName,
-                      products.productsList[index].productUrl,
-                      products.productsList[index].site,
-                      products.productsList[index].price.toString(),
-                      products.productsList[index].rating.toString()
-                    });
+                    return InkWell(
+                      onTap: () => null,
+                      child: Card(
+                        elevation: 4,
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(15)),
+                        margin: EdgeInsets.all(10),
+                        child: Column(
+                          children: <Widget>[
+                            Stack(
+                              children: <Widget>[
+                                ClipRRect(
+                                  borderRadius: BorderRadius.only(
+                                    topLeft: Radius.circular(15),
+                                    topRight: Radius.circular(15),
+                                  ),
+                                  child: Image.network(
+                                    products.productsList[index].siteImageUrl,
+                                    height: 250,
+                                    width: double.infinity,
+                                    fit: BoxFit.cover,
+                                  ),
+                                ),
+                                Positioned(
+                                  bottom: 35,
+                                  right: 25,
+                                  child: Container(
+                                    color: Colors.black54,
+                                    width: 300,
+                                    padding: EdgeInsets.symmetric(
+                                      vertical: 5,
+                                      horizontal: 20,
+                                    ),
+                                    child: Text(
+                                      products.productsList[index].itemName,
+                                      style: TextStyle(
+                                          fontSize: 22,
+                                          fontWeight: FontWeight.bold,
+                                          color: Colors.white),
+                                      softWrap: true,
+                                      overflow: TextOverflow.fade,
+                                    ),
+                                  ),
+                                ),
+                                Positioned(
+                                  bottom: 0,
+                                  right: 25,
+                                  child: Container(
+                                    color: Colors.black54,
+                                    width: 300,
+                                    padding: EdgeInsets.symmetric(
+                                      vertical: 5,
+                                      horizontal: 20,
+                                    ),
+                                    child: Text(
+                                      products.productsList[index].site,
+                                      style: TextStyle(
+                                          fontSize: 20, color: Colors.white),
+                                      softWrap: true,
+                                      overflow: TextOverflow.fade,
+                                    ),
+                                  ),
+                                ),
+                                Positioned(
+                                  top: 20,
+                                  left: 10,
+                                  child: Container(
+                                    decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(5),
+                                        color: Colors.green),
+                                    padding: EdgeInsets.symmetric(
+                                        horizontal: 10, vertical: 1),
+                                    child: Text(
+                                      products.productsList[index].rating
+                                          .toString(),
+                                      style: TextStyle(
+                                          fontSize: 15, color: Colors.white),
+                                      softWrap: true,
+                                      overflow: TextOverflow.fade,
+                                    ),
+                                  ),
+                                ),
+                                Positioned(
+                                  top: 20,
+                                  left: 35,
+                                  child: Container(
+                                    padding: EdgeInsets.symmetric(
+                                        horizontal: 10, vertical: 1),
+                                    child: Text(
+                                      "5 reviews",
+                                      style: TextStyle(
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 15,
+                                          color: Colors.white),
+                                      softWrap: true,
+                                      overflow: TextOverflow.fade,
+                                    ),
+                                  ),
+                                )
+                              ],
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.all(20.0),
+                              child: Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: <Widget>[
+                                  Row(
+                                    children: <Widget>[
+                                      Text(
+                                        "${products.productsList[index].price} BDT",
+                                        style: TextStyle(
+                                            fontWeight: FontWeight.w800,
+                                            fontSize: 18,
+                                            color: Colors.green),
+                                      ),
+                                    ],
+                                  ),
+                                  Row(
+                                    children: <Widget>[
+                                      Text(
+                                        'View Deal',
+                                        style: TextStyle(
+                                            fontWeight: FontWeight.w800,
+                                            fontSize: 17,
+                                            color: Colors.black87),
+                                      ),
+                                      SizedBox(
+                                        width: 6,
+                                      ),
+                                      Icon(Icons.arrow_forward_ios),
+                                    ],
+                                  )
+                                ],
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    );
                   }),
             );
           },

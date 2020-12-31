@@ -20,12 +20,13 @@ class AppData with ChangeNotifier {
       final response = await http.post("http://10.0.2.2:5000/search",
           body: {"name": pName, "ctg": category});
       var responseData = json.decode(response.body);
-      //print(responseData);
-      // print("addncome called");
       if (response.statusCode == 200) {
+        _productsList.clear();
         //notify income list widget
-        _productsList.add(Products.fromJson(responseData));
-        notifyListeners();
+        for (var data in responseData) {
+          _productsList.add(Products.fromJson(data));
+          notifyListeners();
+        }
       } else if (response.statusCode == 400) {
         print("Server Error");
       }
@@ -36,6 +37,7 @@ class AppData with ChangeNotifier {
 
   //Access [get] search Products List Format
   List<Products> get productsList {
+    print("productsList call $_productsList");
     return [..._productsList];
   }
 
@@ -53,9 +55,9 @@ class AppData with ChangeNotifier {
     print("fetchCategory work");
     try {
       final response = await http.get("http://10.0.2.2:5000/catagory");
-      print("response $response");
       var responseData = json.decode(response.body);
       if (response.statusCode == 200) {
+        _categoryList.clear();
         if (responseData == null) {
           return;
         } else {
@@ -85,12 +87,14 @@ class AppData with ChangeNotifier {
           body: {"ctg": category.toString()});
       var responseData = json.decode(response.body);
       if (response.statusCode == 200) {
+        _hintProductsList.clear();
         if (responseData == null) {
           print("Null");
           return;
         } else {
           for (var data in responseData) {
             print("Data $data");
+
             _hintProductsList
                 .add(HintProduct.fromJson(data).itemName.toString());
             notifyListeners();

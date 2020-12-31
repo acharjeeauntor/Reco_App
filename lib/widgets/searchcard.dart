@@ -13,6 +13,7 @@ class Searchcard extends StatefulWidget {
 
 class _SearchcardState extends State<Searchcard> {
   TextEditingController _categoryController = new TextEditingController();
+  TextEditingController _productController = new TextEditingController();
 
   String _selectProduct = "";
 
@@ -47,7 +48,10 @@ class _SearchcardState extends State<Searchcard> {
                     height: 20,
                   ),
                   TypeAheadField(
+                    hideOnEmpty: true,
+                    getImmediateSuggestions: true,
                     textFieldConfiguration: TextFieldConfiguration(
+                        controller: _productController,
                         autofocus: true,
                         style: DefaultTextStyle.of(context)
                             .style
@@ -60,13 +64,13 @@ class _SearchcardState extends State<Searchcard> {
                     },
                     itemBuilder: (context, suggestion) {
                       return ListTile(
-                        title: Text(suggestion),
+                        title: GestureDetector(
+                          child: Text(suggestion),
+                        ),
                       );
                     },
                     onSuggestionSelected: (suggestion) {
-                      setState(() {
-                        _selectProduct = suggestion;
-                      });
+                      _productController.text = suggestion;
                     },
                   ),
                   SizedBox(
@@ -106,13 +110,12 @@ class _SearchcardState extends State<Searchcard> {
     return GestureDetector(
       onTap: () {
         appDataProvider.fetchProducts(
-            pName: _selectProduct.toString(),
-            category: _categoryController.text);
-        appDataProvider.addProductName(_selectProduct.toString());
+            pName: _productController.text, category: _categoryController.text);
+        appDataProvider.addProductName(_productController.text);
 //        print(_categoryController.text);
 //        print(_suggestionTextFieldController.text);
         _categoryController.clear();
-        _selectProduct = "";
+        _productController.text = "";
 
         print("Search");
         Navigator.push(
