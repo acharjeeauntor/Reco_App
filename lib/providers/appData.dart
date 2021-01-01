@@ -8,7 +8,7 @@ import 'package:recoapp/models/Products.dart';
 
 class AppData with ChangeNotifier {
   var productName = '';
-  //var productCategory = '';
+  var productCategory = '';
 
   List<Products> _productsList = [];
   List<String> _categoryList = [];
@@ -20,6 +20,35 @@ class AppData with ChangeNotifier {
       final response = await http.post("http://10.0.2.2:5000/search",
           body: {"name": pName, "ctg": category});
       var responseData = json.decode(response.body);
+      if (response.statusCode == 200) {
+        _productsList.clear();
+        //notify income list widget
+        for (var data in responseData) {
+          _productsList.add(Products.fromJson(data));
+          notifyListeners();
+        }
+      } else if (response.statusCode == 400) {
+        print("Server Error");
+      }
+    } catch (error) {
+      throw error;
+    }
+  }
+
+  // search [post] product using Filtering and add them on our local List
+  Future<void> fetchProductsByFilter(String productName, String productPrice,
+      String productRating, String productCategory) async {
+    print("fetchProductsByFilter work");
+    try {
+      final response =
+          await http.post("http://10.0.2.2:5000/search/filter", body: {
+        "name": productName,
+        "ctg": productCategory,
+        "price": productPrice,
+        "rating": productRating
+      });
+      var responseData = json.decode(response.body);
+      print("fetchProductsByFilter $responseData");
       if (response.statusCode == 200) {
         _productsList.clear();
         //notify income list widget
@@ -47,8 +76,17 @@ class AppData with ChangeNotifier {
     notifyListeners();
   }
 
+  // Store Category
+  Future<void> addCategoryName(String category) {
+    productCategory = category;
+    notifyListeners();
+  }
+
   // show [get] product name
   String get searchProductName => productName;
+
+  // show [get] category
+  String get getCategory => productCategory;
 
   //get all category from server side or database and add them on our local List
   Future<void> fetchCategory() async {

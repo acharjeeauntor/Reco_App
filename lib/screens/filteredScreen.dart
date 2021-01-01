@@ -1,4 +1,6 @@
+import 'package:provider/provider.dart';
 import 'package:recoapp/index.dart';
+import 'package:recoapp/providers/appData.dart';
 
 class FilteredScreen extends StatefulWidget {
   @override
@@ -6,10 +8,11 @@ class FilteredScreen extends StatefulWidget {
 }
 
 class _FilteredScreenState extends State<FilteredScreen> {
-  double price = 10000.0;
+  int price = 1000;
   var rating = 0;
   @override
   Widget build(BuildContext context) {
+    final appDataProvider = Provider.of<AppData>(context, listen: false);
     return Scaffold(
       appBar: AppBar(
         title: Text(
@@ -29,7 +32,7 @@ class _FilteredScreenState extends State<FilteredScreen> {
             ),
             onTap: () {
               setState(() {
-                price = 10000.0;
+                price = 1000;
                 rating = 0;
               });
             },
@@ -74,13 +77,13 @@ class _FilteredScreenState extends State<FilteredScreen> {
                             RoundSliderOverlayShape(overlayRadius: 28.0),
                       ),
                       child: Slider(
-                        min: 100,
-                        max: 10000,
-                        divisions: 10,
-                        value: price,
-                        onChanged: (value) {
+                        min: 1000,
+                        divisions: 1000,
+                        max: 100000,
+                        value: price.toDouble(),
+                        onChanged: (double value) {
                           setState(() {
-                            price = value;
+                            price = value.toInt();
                           });
                         },
                       ),
@@ -117,9 +120,9 @@ class _FilteredScreenState extends State<FilteredScreen> {
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: [
                         ratting(context, Colors.redAccent, 0),
-                        ratting(context, Colors.green, 5),
-                        ratting(context, Colors.deepOrangeAccent, 7),
-                        ratting(context, Colors.orangeAccent, 10),
+                        ratting(context, Colors.green, 3),
+                        ratting(context, Colors.deepOrangeAccent, 5),
+                        ratting(context, Colors.orangeAccent, 7),
                       ],
                     ),
                   ],
@@ -135,6 +138,13 @@ class _FilteredScreenState extends State<FilteredScreen> {
               onPressed: () {
                 print("Rating:$rating");
                 print("Price:$price");
+
+                appDataProvider.fetchProductsByFilter(
+                    appDataProvider.productName,
+                    price.toString(),
+                    rating.toString(),
+                    appDataProvider.getCategory);
+
                 Navigator.pop(context);
               },
               child: Padding(

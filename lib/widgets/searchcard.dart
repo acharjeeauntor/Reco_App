@@ -112,6 +112,7 @@ class _SearchcardState extends State<Searchcard> {
         appDataProvider.fetchProducts(
             pName: _productController.text, category: _categoryController.text);
         appDataProvider.addProductName(_productController.text);
+        appDataProvider.addCategoryName(_categoryController.text);
 //        print(_categoryController.text);
 //        print(_suggestionTextFieldController.text);
         _categoryController.clear();
