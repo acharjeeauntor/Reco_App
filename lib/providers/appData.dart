@@ -25,8 +25,8 @@ class AppData with ChangeNotifier {
         //notify income list widget
         for (var data in responseData) {
           _productsList.add(Products.fromJson(data));
-          notifyListeners();
         }
+        notifyListeners();
       } else if (response.statusCode == 400) {
         print("Server Error");
       }
@@ -38,7 +38,7 @@ class AppData with ChangeNotifier {
   // search [post] product using Filtering and add them on our local List
   Future<void> fetchProductsByFilter(String productName, String productPrice,
       String productRating, String productCategory) async {
-    print("fetchProductsByFilter work");
+//    print("fetchProductsByFilter work");
     try {
       final response =
           await http.post("http://10.0.2.2:5000/search/filter", body: {
@@ -48,14 +48,62 @@ class AppData with ChangeNotifier {
         "rating": productRating
       });
       var responseData = json.decode(response.body);
-      print("fetchProductsByFilter $responseData");
+//      print("fetchProductsByFilter $responseData");
       if (response.statusCode == 200) {
         _productsList.clear();
         //notify income list widget
         for (var data in responseData) {
           _productsList.add(Products.fromJson(data));
-          notifyListeners();
         }
+        notifyListeners();
+      } else if (response.statusCode == 400) {
+        print("Server Error");
+      }
+    } catch (error) {
+      throw error;
+    }
+  }
+
+  // sort product by rating and add them on our local List
+  Future<void> sortProductByRating(
+      String productName, String productCategory) async {
+//    print("fetchProductsByFilter work");
+    try {
+      final response = await http.post("http://10.0.2.2:5000/search/rating",
+          body: {"name": productName, "ctg": productCategory});
+      var responseData = json.decode(response.body);
+//      print("fetchProductsByFilter $responseData");
+      if (response.statusCode == 200) {
+        _productsList.clear();
+        //notify income list widget
+        for (var data in responseData) {
+          _productsList.add(Products.fromJson(data));
+        }
+        notifyListeners();
+      } else if (response.statusCode == 400) {
+        print("Server Error");
+      }
+    } catch (error) {
+      throw error;
+    }
+  }
+
+  // sort product by price and add them on our local List
+  Future<void> sortProductByPrice(
+      String productName, String productCategory) async {
+//    print("fetchProductsByFilter work");
+    try {
+      final response = await http.post("http://10.0.2.2:5000/search/price",
+          body: {"name": productName, "ctg": productCategory});
+      var responseData = json.decode(response.body);
+//      print("fetchProductsByFilter $responseData");
+      if (response.statusCode == 200) {
+        _productsList.clear();
+        //notify income list widget
+        for (var data in responseData) {
+          _productsList.add(Products.fromJson(data));
+        }
+        notifyListeners();
       } else if (response.statusCode == 400) {
         print("Server Error");
       }
@@ -66,7 +114,7 @@ class AppData with ChangeNotifier {
 
   //Access [get] search Products List Format
   List<Products> get productsList {
-    print("productsList call $_productsList");
+//    print("productsList call $_productsList");
     return [..._productsList];
   }
 
@@ -90,7 +138,7 @@ class AppData with ChangeNotifier {
 
   //get all category from server side or database and add them on our local List
   Future<void> fetchCategory() async {
-    print("fetchCategory work");
+//    print("fetchCategory work");
     try {
       final response = await http.get("http://10.0.2.2:5000/catagory");
       var responseData = json.decode(response.body);
@@ -101,8 +149,8 @@ class AppData with ChangeNotifier {
         } else {
           for (var data in responseData) {
             _categoryList.add(Category.fromJson(data).categoryname);
-            notifyListeners();
           }
+          notifyListeners();
         }
       } else if (response.statusCode == 400) {
         print("Server Error");
@@ -135,8 +183,8 @@ class AppData with ChangeNotifier {
 
             _hintProductsList
                 .add(HintProduct.fromJson(data).itemName.toString());
-            notifyListeners();
           }
+          notifyListeners();
         }
       } else if (response.statusCode == 400) {
         print("Server Error");

@@ -136,8 +136,8 @@ class _FilteredScreenState extends State<FilteredScreen> {
             child: RaisedButton(
               color: Theme.of(context).accentColor,
               onPressed: () {
-                print("Rating:$rating");
-                print("Price:$price");
+//                print("Rating:$rating");
+//                print("Price:$price");
 
                 appDataProvider.fetchProductsByFilter(
                     appDataProvider.productName,

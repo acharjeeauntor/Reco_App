@@ -24,7 +24,7 @@ class _MainScreen extends State<MainScreen> {
               color: Color(0xFF737373),
               height: 180,
               child: Container(
-                child: navigatorColumn(context),
+                child: navigatorColumn(context, appDataProvider),
                 decoration: BoxDecoration(
                     color: Theme.of(context).canvasColor,
                     borderRadius: BorderRadius.only(
@@ -134,22 +134,17 @@ class _MainScreen extends State<MainScreen> {
                                 Stack(
                                   children: <Widget>[
                                     ClipRRect(
-                                      borderRadius: BorderRadius.only(
-                                        topLeft: Radius.circular(15),
-                                        topRight: Radius.circular(15),
-                                      ),
-                                      child: products.productsList[index]
-                                                  .siteImageUrl !=
-                                              null
-                                          ? Image.network(
-                                              products.productsList[index]
-                                                  .siteImageUrl,
-                                              height: 250,
-                                              width: double.infinity,
-                                              fit: BoxFit.cover,
-                                            )
-                                          : Container(),
-                                    ),
+                                        borderRadius: BorderRadius.only(
+                                          topLeft: Radius.circular(15),
+                                          topRight: Radius.circular(15),
+                                        ),
+                                        child: Image.network(
+                                          products
+                                              .productsList[index].siteImageUrl,
+                                          height: 250,
+                                          width: double.infinity,
+                                          fit: BoxFit.cover,
+                                        )),
                                     Positioned(
                                       bottom: 35,
                                       right: 25,
@@ -278,7 +273,7 @@ class _MainScreen extends State<MainScreen> {
     ));
   }
 
-  Column navigatorColumn(BuildContext context) {
+  Column navigatorColumn(BuildContext context, AppData appData) {
     return Column(
       children: [
         ListTile(
@@ -286,13 +281,17 @@ class _MainScreen extends State<MainScreen> {
             setState(() {
               selectedRadio = 1;
               sortType = 'ourrecommendations';
-              print(sortType);
+              appData.fetchProducts(
+                  pName: appData.productName, category: appData.getCategory);
               Navigator.pop(context);
             })
           },
           title: const Text('Our Recommendations'),
           leading: Radio(
-            onChanged: (val) {},
+            onChanged: (val) {
+              appData.fetchProducts(
+                  pName: appData.productName, category: appData.getCategory);
+            },
             activeColor: Colors.blueAccent,
             value: 1,
             groupValue: selectedRadio,
@@ -303,13 +302,17 @@ class _MainScreen extends State<MainScreen> {
             setState(() {
               selectedRadio = 2;
               sortType = 'price';
-              print(sortType);
+              appData.sortProductByPrice(
+                  appData.productName, appData.getCategory);
               Navigator.pop(context);
             })
           },
           title: const Text('Price Only'),
           leading: Radio(
-            onChanged: (val) {},
+            onChanged: (val) {
+              appData.sortProductByPrice(
+                  appData.productName, appData.getCategory);
+            },
             activeColor: Colors.blueAccent,
             value: 2,
             groupValue: selectedRadio,
@@ -320,7 +323,8 @@ class _MainScreen extends State<MainScreen> {
             setState(() {
               selectedRadio = 3;
               sortType = 'rating';
-              print(sortType);
+              appData.sortProductByRating(
+                  appData.productName, appData.getCategory);
               Navigator.pop(context);
             })
           },
@@ -329,7 +333,10 @@ class _MainScreen extends State<MainScreen> {
             activeColor: Colors.blueAccent,
             value: 3,
             groupValue: selectedRadio,
-            onChanged: (val) {},
+            onChanged: (val) {
+              appData.sortProductByRating(
+                  appData.productName, appData.getCategory);
+            },
           ),
         ),
       ],
