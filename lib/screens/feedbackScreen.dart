@@ -1,4 +1,4 @@
-import 'package:recoapp/index.dart';
+import 'package:reco_app/index.dart';
 
 class FeedbackScreen extends StatefulWidget {
   @override

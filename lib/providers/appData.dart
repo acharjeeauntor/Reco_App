@@ -2,9 +2,9 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
-import 'package:recoapp/models/Category.dart';
-import 'package:recoapp/models/HintProduct.dart';
-import 'package:recoapp/models/Products.dart';
+import 'package:reco_app/models/Category.dart';
+import 'package:reco_app/models/HintProduct.dart';
+import 'package:reco_app/models/Products.dart';
 
 class AppData with ChangeNotifier {
   var productName = '';

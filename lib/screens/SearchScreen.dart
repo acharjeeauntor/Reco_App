@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:recoapp/widgets/searchcard.dart';
+import 'package:reco_app/widgets/searchcard.dart';
 
 class SearchScreen extends StatefulWidget {
   @override

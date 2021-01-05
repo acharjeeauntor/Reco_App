@@ -1,9 +1,9 @@
 import 'package:provider/provider.dart';
-import 'package:recoapp/index.dart';
-import 'package:recoapp/providers/appData.dart';
-import 'package:recoapp/screens/InternetConnectionScreen.dart';
+import 'index.dart';
 
 import 'mycolors.dart';
+import 'providers/appData.dart';
+import 'screens/InternetConnectionScreen.dart';
 
 void main() {
   runApp(MyApp());

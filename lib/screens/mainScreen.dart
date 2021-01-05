@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:recoapp/index.dart';
-import 'package:recoapp/providers/appData.dart';
+import 'package:reco_app/index.dart';
+import 'package:reco_app/providers/appData.dart';
+import 'package:url_launcher/url_launcher.dart';
+
+import 'filteredScreen.dart';
 
 class MainScreen extends StatefulWidget {
   @override
@@ -90,7 +93,7 @@ class _MainScreen extends State<MainScreen> {
                                   builder: (context) => FilteredScreen()),
                             );
                           },
-                          icon: Icon(Icons.ac_unit),
+                          icon: Icon(Icons.wrap_text),
                           label: Text('Filter',
                               style: TextStyle(
                                   color: Colors.redAccent,
@@ -98,7 +101,7 @@ class _MainScreen extends State<MainScreen> {
                                   fontSize: 20))),
                       FlatButton.icon(
                           onPressed: () => _pressedSortButton(),
-                          icon: Icon(Icons.ac_unit),
+                          icon: Icon(Icons.sort),
                           label: Text('Sort',
                               style: TextStyle(
                                   color: Colors.blueAccent,
@@ -243,20 +246,26 @@ class _MainScreen extends State<MainScreen> {
                                           ),
                                         ],
                                       ),
-                                      Row(
-                                        children: <Widget>[
-                                          Text(
-                                            'View Deal',
-                                            style: TextStyle(
-                                                fontWeight: FontWeight.w800,
-                                                fontSize: 17,
-                                                color: Colors.black87),
-                                          ),
-                                          SizedBox(
-                                            width: 6,
-                                          ),
-                                          Icon(Icons.arrow_forward_ios),
-                                        ],
+                                      GestureDetector(
+                                        onTap: () {
+                                          launchURL(products
+                                              .productsList[index].productUrl);
+                                        },
+                                        child: Row(
+                                          children: <Widget>[
+                                            Text(
+                                              'View Deal',
+                                              style: TextStyle(
+                                                  fontWeight: FontWeight.w800,
+                                                  fontSize: 17,
+                                                  color: Colors.black87),
+                                            ),
+                                            SizedBox(
+                                              width: 6,
+                                            ),
+                                            Icon(Icons.arrow_forward_ios),
+                                          ],
+                                        ),
                                       )
                                     ],
                                   ),
@@ -341,5 +350,14 @@ class _MainScreen extends State<MainScreen> {
         ),
       ],
     );
+  }
+
+  void launchURL(String url) async {
+    print("Url call");
+    if (await canLaunch(url)) {
+      await launch(url, forceWebView: true);
+    } else {
+      throw 'Could not launch $url';
+    }
   }
 }

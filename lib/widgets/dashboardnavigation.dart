@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:recoapp/providers/appData.dart';
-import 'package:recoapp/screens/SearchScreen.dart';
-import 'package:recoapp/screens/settingsScreen.dart';
+import 'package:reco_app/providers/appData.dart';
+import 'package:reco_app/screens/SearchScreen.dart';
+import 'package:reco_app/screens/settingsScreen.dart';
+
 
 class DashboardNavigation extends StatefulWidget {
   static const routeName = 'dashboardnavigation';

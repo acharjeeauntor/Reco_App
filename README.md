@@ -1,4 +1,4 @@
-# recoapp
+# reco_app
 
 A new Flutter application.
 

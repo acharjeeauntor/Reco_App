@@ -1,4 +1,5 @@
-import 'package:recoapp/index.dart';
+import 'package:reco_app/index.dart';
+import 'package:reco_app/screens/privacyPolicyScreen.dart';
 import 'package:share/share.dart';
 
 class SettingsScreen extends StatefulWidget {

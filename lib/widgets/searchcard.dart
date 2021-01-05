@@ -2,9 +2,9 @@ import 'package:dropdownfield/dropdownfield.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_typeahead/flutter_typeahead.dart';
 import 'package:provider/provider.dart';
-import 'package:recoapp/index.dart';
-import 'package:recoapp/providers/appData.dart';
-import 'package:recoapp/screens/mainScreen.dart';
+import 'package:reco_app/index.dart';
+import 'package:reco_app/providers/appData.dart';
+import 'package:reco_app/screens/mainScreen.dart';
 
 class Searchcard extends StatefulWidget {
   @override
@@ -52,7 +52,6 @@ class _SearchcardState extends State<Searchcard> {
                     getImmediateSuggestions: true,
                     textFieldConfiguration: TextFieldConfiguration(
                         controller: _productController,
-                        autofocus: true,
                         style: DefaultTextStyle.of(context)
                             .style
                             .copyWith(fontStyle: FontStyle.italic),

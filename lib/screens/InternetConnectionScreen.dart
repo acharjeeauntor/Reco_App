@@ -1,7 +1,7 @@
 import 'package:connectivity/connectivity.dart';
 import 'package:flutter/material.dart';
-import 'package:recoapp/index.dart';
-import 'package:recoapp/widgets/dashboardnavigation.dart';
+import 'package:reco_app/index.dart';
+import 'package:reco_app/widgets/dashboardnavigation.dart';
 
 class InternetConnectionCheck extends StatefulWidget {
   @override

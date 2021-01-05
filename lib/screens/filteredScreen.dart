@@ -1,6 +1,6 @@
 import 'package:provider/provider.dart';
-import 'package:recoapp/index.dart';
-import 'package:recoapp/providers/appData.dart';
+import 'package:reco_app/index.dart';
+import 'package:reco_app/providers/appData.dart';
 
 class FilteredScreen extends StatefulWidget {
   @override

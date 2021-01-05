@@ -1,4 +1,4 @@
-import 'package:recoapp/index.dart';
+import 'index.dart';
 
 class MyColor {
   static Color appBarColor = Color(0xff7C6B97);

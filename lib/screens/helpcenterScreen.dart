@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:recoapp/index.dart';
+import 'package:reco_app/index.dart';
 
 class HelpCenterScreen extends StatefulWidget {
   @override
