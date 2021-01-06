@@ -116,166 +116,178 @@ class _MainScreen extends State<MainScreen> {
         ),
         Consumer<AppData>(
           builder: (context, products, ch) {
-            return Expanded(
-              child: products.productsList.length == 0
-                  ? Center(child: Text("No Product Found"))
-                  : ListView.builder(
-                      scrollDirection: Axis.vertical,
-                      shrinkWrap: true,
-                      physics: ScrollPhysics(),
-                      itemCount: products.productsList.length,
-                      itemBuilder: (BuildContext context, int index) {
-                        return InkWell(
-                          onTap: () => null,
-                          child: Card(
-                            elevation: 4,
-                            shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(15)),
-                            margin: EdgeInsets.all(10),
-                            child: Column(
-                              children: <Widget>[
-                                Stack(
-                                  children: <Widget>[
-                                    ClipRRect(
-                                        borderRadius: BorderRadius.only(
-                                          topLeft: Radius.circular(15),
-                                          topRight: Radius.circular(15),
-                                        ),
-                                        child: Image.network(
-                                          products
-                                              .productsList[index].siteImageUrl,
-                                          height: 250,
-                                          width: double.infinity,
-                                          fit: BoxFit.cover,
-                                        )),
-                                    Positioned(
-                                      bottom: 35,
-                                      right: 25,
-                                      child: Container(
-                                        color: Colors.black54,
-                                        width: 300,
-                                        padding: EdgeInsets.symmetric(
-                                          vertical: 5,
-                                          horizontal: 20,
-                                        ),
-                                        child: Text(
-                                          products.productsList[index].itemName,
-                                          style: TextStyle(
-                                              fontSize: 22,
-                                              fontWeight: FontWeight.bold,
-                                              color: Colors.white),
-                                          softWrap: true,
-                                          overflow: TextOverflow.fade,
-                                        ),
-                                      ),
-                                    ),
-                                    Positioned(
-                                      bottom: 0,
-                                      right: 25,
-                                      child: Container(
-                                        color: Colors.black54,
-                                        width: 300,
-                                        padding: EdgeInsets.symmetric(
-                                          vertical: 5,
-                                          horizontal: 20,
-                                        ),
-                                        child: Text(
-                                          products.productsList[index].site,
-                                          style: TextStyle(
-                                              fontSize: 20,
-                                              color: Colors.white),
-                                          softWrap: true,
-                                          overflow: TextOverflow.fade,
-                                        ),
-                                      ),
-                                    ),
-                                    Positioned(
-                                      top: 20,
-                                      left: 10,
-                                      child: Container(
-                                        decoration: BoxDecoration(
-                                            borderRadius:
-                                                BorderRadius.circular(5),
-                                            color: Colors.green),
-                                        padding: EdgeInsets.symmetric(
-                                            horizontal: 10, vertical: 1),
-                                        child: Text(
-                                          products.productsList[index].rating
-                                              .toString(),
-                                          style: TextStyle(
-                                              fontSize: 15,
-                                              color: Colors.white),
-                                          softWrap: true,
-                                          overflow: TextOverflow.fade,
-                                        ),
-                                      ),
-                                    ),
-                                    Positioned(
-                                      top: 20,
-                                      left: 35,
-                                      child: Container(
-                                        padding: EdgeInsets.symmetric(
-                                            horizontal: 10, vertical: 1),
-                                        child: Text(
-                                          "5 reviews",
-                                          style: TextStyle(
-                                              fontWeight: FontWeight.bold,
-                                              fontSize: 15,
-                                              color: Colors.white),
-                                          softWrap: true,
-                                          overflow: TextOverflow.fade,
-                                        ),
-                                      ),
-                                    )
-                                  ],
-                                ),
-                                Padding(
-                                  padding: const EdgeInsets.all(20.0),
-                                  child: Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
+            return products.indicator
+                ? Expanded(
+                    child: Center(
+                      child: CircularProgressIndicator(),
+                    ),
+                  )
+                : Expanded(
+                    child: products.productsList.length == 0
+                        ? Center(child: Text("No Product Found"))
+                        : ListView.builder(
+                            scrollDirection: Axis.vertical,
+                            shrinkWrap: true,
+                            physics: ScrollPhysics(),
+                            itemCount: products.productsList.length,
+                            itemBuilder: (BuildContext context, int index) {
+                              return InkWell(
+                                onTap: () => null,
+                                child: Card(
+                                  elevation: 4,
+                                  shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(15)),
+                                  margin: EdgeInsets.all(10),
+                                  child: Column(
                                     children: <Widget>[
-                                      Row(
+                                      Stack(
                                         children: <Widget>[
-                                          Text(
-                                            "${products.productsList[index].price} BDT",
-                                            style: TextStyle(
-                                                fontWeight: FontWeight.w800,
-                                                fontSize: 18,
-                                                color: Colors.green),
+                                          ClipRRect(
+                                              borderRadius: BorderRadius.only(
+                                                topLeft: Radius.circular(15),
+                                                topRight: Radius.circular(15),
+                                              ),
+                                              child: Image.network(
+                                                products.productsList[index]
+                                                    .siteImageUrl,
+                                                height: 250,
+                                                width: double.infinity,
+                                                fit: BoxFit.cover,
+                                              )),
+                                          Positioned(
+                                            bottom: 35,
+                                            right: 25,
+                                            child: Container(
+                                              color: Colors.black54,
+                                              width: 300,
+                                              padding: EdgeInsets.symmetric(
+                                                vertical: 5,
+                                                horizontal: 20,
+                                              ),
+                                              child: Text(
+                                                products.productsList[index]
+                                                    .itemName,
+                                                style: TextStyle(
+                                                    fontSize: 22,
+                                                    fontWeight: FontWeight.bold,
+                                                    color: Colors.white),
+                                                softWrap: true,
+                                                overflow: TextOverflow.fade,
+                                              ),
+                                            ),
                                           ),
+                                          Positioned(
+                                            bottom: 0,
+                                            right: 25,
+                                            child: Container(
+                                              color: Colors.black54,
+                                              width: 300,
+                                              padding: EdgeInsets.symmetric(
+                                                vertical: 5,
+                                                horizontal: 20,
+                                              ),
+                                              child: Text(
+                                                products
+                                                    .productsList[index].site,
+                                                style: TextStyle(
+                                                    fontSize: 20,
+                                                    color: Colors.white),
+                                                softWrap: true,
+                                                overflow: TextOverflow.fade,
+                                              ),
+                                            ),
+                                          ),
+                                          Positioned(
+                                            top: 20,
+                                            left: 10,
+                                            child: Container(
+                                              decoration: BoxDecoration(
+                                                  borderRadius:
+                                                      BorderRadius.circular(5),
+                                                  color: Colors.green),
+                                              padding: EdgeInsets.symmetric(
+                                                  horizontal: 10, vertical: 1),
+                                              child: Text(
+                                                products
+                                                    .productsList[index].rating
+                                                    .toString(),
+                                                style: TextStyle(
+                                                    fontSize: 15,
+                                                    color: Colors.white),
+                                                softWrap: true,
+                                                overflow: TextOverflow.fade,
+                                              ),
+                                            ),
+                                          ),
+                                          Positioned(
+                                            top: 20,
+                                            left: 35,
+                                            child: Container(
+                                              padding: EdgeInsets.symmetric(
+                                                  horizontal: 10, vertical: 1),
+                                              child: Text(
+                                                "5 reviews",
+                                                style: TextStyle(
+                                                    fontWeight: FontWeight.bold,
+                                                    fontSize: 15,
+                                                    color: Colors.white),
+                                                softWrap: true,
+                                                overflow: TextOverflow.fade,
+                                              ),
+                                            ),
+                                          )
                                         ],
                                       ),
-                                      GestureDetector(
-                                        onTap: () {
-                                          launchURL(products
-                                              .productsList[index].productUrl);
-                                        },
+                                      Padding(
+                                        padding: const EdgeInsets.all(20.0),
                                         child: Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceBetween,
                                           children: <Widget>[
-                                            Text(
-                                              'View Deal',
-                                              style: TextStyle(
-                                                  fontWeight: FontWeight.w800,
-                                                  fontSize: 17,
-                                                  color: Colors.black87),
+                                            Row(
+                                              children: <Widget>[
+                                                Text(
+                                                  "${products.productsList[index].price} BDT",
+                                                  style: TextStyle(
+                                                      fontWeight:
+                                                          FontWeight.w800,
+                                                      fontSize: 18,
+                                                      color: Colors.green),
+                                                ),
+                                              ],
                                             ),
-                                            SizedBox(
-                                              width: 6,
-                                            ),
-                                            Icon(Icons.arrow_forward_ios),
+                                            GestureDetector(
+                                              onTap: () {
+                                                launchURL(products
+                                                    .productsList[index]
+                                                    .productUrl);
+                                              },
+                                              child: Row(
+                                                children: <Widget>[
+                                                  Text(
+                                                    'View Deal',
+                                                    style: TextStyle(
+                                                        fontWeight:
+                                                            FontWeight.w800,
+                                                        fontSize: 17,
+                                                        color: Colors.black87),
+                                                  ),
+                                                  SizedBox(
+                                                    width: 6,
+                                                  ),
+                                                  Icon(Icons.arrow_forward_ios),
+                                                ],
+                                              ),
+                                            )
                                           ],
                                         ),
-                                      )
+                                      ),
                                     ],
                                   ),
                                 ),
-                              ],
-                            ),
-                          ),
-                        );
-                      }),
-            );
+                              );
+                            }),
+                  );
           },
         )
       ],

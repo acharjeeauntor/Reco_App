@@ -15,7 +15,7 @@ class _SearchcardState extends State<Searchcard> {
   TextEditingController _categoryController = new TextEditingController();
   TextEditingController _productController = new TextEditingController();
 
-  String _selectProduct = "";
+  //String _selectProduct = "";
 
   @override
   Widget build(BuildContext context) {
@@ -91,12 +91,9 @@ class _SearchcardState extends State<Searchcard> {
       controller: _categoryController,
       onValueChanged: (dynamic value) {
         appData.fetchProductForHint(value);
-        //suggestionsList = [...appDataProvider.hintProductsList];
-
-        _categoryController = value;
+        // _categoryController = value;
       },
       value: _categoryController.text,
-      required: false,
       hintText: 'Choose a category',
       items: appData.categoryList,
       enabled: true,
