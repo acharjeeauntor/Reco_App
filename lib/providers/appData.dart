@@ -10,6 +10,7 @@ class AppData with ChangeNotifier {
   var productName = '';
   var productCategory = '';
   bool isLoading = true;
+  bool isError = false;
 
   List<Products> _productsList = [];
   List<String> _categoryList = [];
@@ -17,6 +18,8 @@ class AppData with ChangeNotifier {
 
   //Set isLoading With true or false
   bool get indicator => isLoading;
+
+  bool get serverError => isError;
 
   // search [post] product by product name & category and add them on our local List
   Future<void> fetchProducts({String pName, String category}) async {
@@ -33,7 +36,7 @@ class AppData with ChangeNotifier {
         isLoading = false;
         notifyListeners();
       } else if (response.statusCode == 400) {
-        print("Server Error");
+        isError = true;
       }
     } catch (error) {
       throw error;
@@ -63,7 +66,7 @@ class AppData with ChangeNotifier {
         isLoading = false;
         notifyListeners();
       } else if (response.statusCode == 400) {
-        print("Server Error");
+        isError = true;
       }
     } catch (error) {
       throw error;
@@ -88,7 +91,7 @@ class AppData with ChangeNotifier {
         isLoading = false;
         notifyListeners();
       } else if (response.statusCode == 400) {
-        print("Server Error");
+        isError = true;
       }
     } catch (error) {
       throw error;
@@ -113,7 +116,7 @@ class AppData with ChangeNotifier {
         isLoading = false;
         notifyListeners();
       } else if (response.statusCode == 400) {
-        print("Server Error");
+        isError = true;
       }
     } catch (error) {
       throw error;
@@ -161,7 +164,7 @@ class AppData with ChangeNotifier {
           notifyListeners();
         }
       } else if (response.statusCode == 400) {
-        print("Server Error");
+        isError = true;
       }
     } catch (error) {
       throw error;
@@ -195,7 +198,7 @@ class AppData with ChangeNotifier {
           notifyListeners();
         }
       } else if (response.statusCode == 400) {
-        print("Server Error");
+        isError = true;
       }
     } catch (error) {
       throw error;

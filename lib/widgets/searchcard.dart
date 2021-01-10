@@ -1,9 +1,11 @@
 import 'package:dropdownfield/dropdownfield.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_typeahead/flutter_typeahead.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:provider/provider.dart';
 import 'package:reco_app/index.dart';
 import 'package:reco_app/providers/appData.dart';
+import 'package:reco_app/screens/ErrorScreen.dart';
 import 'package:reco_app/screens/mainScreen.dart';
 
 class Searchcard extends StatefulWidget {
@@ -105,20 +107,36 @@ class _SearchcardState extends State<Searchcard> {
     final appDataProvider = Provider.of<AppData>(context, listen: false);
     return GestureDetector(
       onTap: () {
-        appDataProvider.fetchProducts(
-            pName: _productController.text, category: _categoryController.text);
-        appDataProvider.addProductName(_productController.text);
-        appDataProvider.addCategoryName(_categoryController.text);
+        if (_productController.text.isEmpty ||
+            _categoryController.text.isEmpty) {
+          Fluttertoast.showToast(
+              msg: "Category And Name Required",
+              toastLength: Toast.LENGTH_LONG,
+              backgroundColor: Colors.red,
+              textColor: Colors.white,
+              fontSize: 16.0);
+        } else {
+          appDataProvider.fetchProducts(
+              pName: _productController.text,
+              category: _categoryController.text);
+          appDataProvider.addProductName(_productController.text);
+          appDataProvider.addCategoryName(_categoryController.text);
+          if (appDataProvider.serverError) {
+            Navigator.pushReplacement(context,
+                MaterialPageRoute(builder: (context) => ErrorScreen()));
+          }
+
 //        print(_categoryController.text);
 //        print(_suggestionTextFieldController.text);
-        _categoryController.clear();
-        _productController.text = "";
+          _categoryController.clear();
+          _productController.text = "";
 
-        print("Search");
-        Navigator.push(
-          context,
-          MaterialPageRoute(builder: (context) => MainScreen()),
-        );
+          print("Search");
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => MainScreen()),
+          );
+        }
       },
       child: Container(
         margin: EdgeInsets.only(left: 10, right: 10),

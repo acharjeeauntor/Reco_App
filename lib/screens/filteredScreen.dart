@@ -1,6 +1,7 @@
 import 'package:provider/provider.dart';
 import 'package:reco_app/index.dart';
 import 'package:reco_app/providers/appData.dart';
+import 'package:reco_app/screens/ErrorScreen.dart';
 
 class FilteredScreen extends StatefulWidget {
   @override
@@ -144,7 +145,10 @@ class _FilteredScreenState extends State<FilteredScreen> {
                     price.toString(),
                     rating.toString(),
                     appDataProvider.getCategory);
-
+                if (appDataProvider.serverError) {
+                  Navigator.pushReplacement(context,
+                      MaterialPageRoute(builder: (context) => ErrorScreen()));
+                }
                 Navigator.pop(context);
               },
               child: Padding(
