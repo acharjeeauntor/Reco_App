@@ -69,14 +69,15 @@ class _MainScreen extends State<MainScreen> {
                       },
                     )),
                 Positioned(
-                  top: 15,
-                  right: 160,
-                  child: Text(
-                    appDataProvider.searchProductName,
-                    style: TextStyle(
-                        color: Colors.green,
-                        fontWeight: FontWeight.w700,
-                        fontSize: 20),
+                  
+                  child: Center(
+                    child: Text(
+                      appDataProvider.searchProductName,
+                      style: TextStyle(
+                          color: Colors.green,
+                          fontWeight: FontWeight.w700,
+                          fontSize: 20),
+                    ),
                   ),
                 ),
                 Positioned(

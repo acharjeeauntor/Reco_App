@@ -104,6 +104,17 @@ class _SearchcardState extends State<Searchcard> {
   }
 
   GestureDetector searchButton(BuildContext context) {
+    // checkStatus() {
+    //   Connectivity().onConnectivityChanged.listen((ConnectivityResult result) {
+    //     if (result == ConnectivityResult.mobile ||
+    //         result == ConnectivityResult.wifi) {
+    //       return true;
+    //     } else {
+    //       return false;
+    //     }
+    //   });
+    // }
+
     final appDataProvider = Provider.of<AppData>(context, listen: false);
     return GestureDetector(
       onTap: () {

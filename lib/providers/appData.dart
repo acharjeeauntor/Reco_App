@@ -223,4 +223,16 @@ class AppData with ChangeNotifier {
     }
     return patternProduct;
   }
+
+  // Insert Feedback
+  Future<String> insertFeedback({String email, String feedback}) async {
+    final response = await http.post("http://10.0.2.2:5000/feedback",
+        body: {"email": email, "message": feedback});
+    // var responseData = json.decode(response.body);
+    if (response.statusCode == 200) {
+      return "Feedback Send";
+    } else if (response.statusCode == 400) {
+      return "Server Error";
+    }
+  }
 }

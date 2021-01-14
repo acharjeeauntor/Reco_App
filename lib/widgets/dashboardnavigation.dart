@@ -4,7 +4,6 @@ import 'package:reco_app/providers/appData.dart';
 import 'package:reco_app/screens/SearchScreen.dart';
 import 'package:reco_app/screens/settingsScreen.dart';
 
-
 class DashboardNavigation extends StatefulWidget {
   static const routeName = 'dashboardnavigation';
 

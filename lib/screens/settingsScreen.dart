@@ -107,7 +107,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
         ),
         Positioned(
           bottom: 10,
-          left: 50,
+          left: 70,
           child: RaisedButton(
               onPressed: () {},
               color: Theme.of(context).accentColor,
