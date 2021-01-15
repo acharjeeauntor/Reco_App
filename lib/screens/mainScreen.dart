@@ -1,10 +1,10 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:reco_app/index.dart';
 import 'package:reco_app/providers/appData.dart';
+import 'package:reco_app/screens/filteredScreen.dart';
 import 'package:url_launcher/url_launcher.dart';
-
-import 'filteredScreen.dart';
 
 class MainScreen extends StatefulWidget {
   @override
@@ -44,76 +44,75 @@ class _MainScreen extends State<MainScreen> {
         Padding(
           padding: const EdgeInsets.only(top: 30.0, left: 10.0, right: 10.0),
           child: Container(
-            height: MediaQuery.of(context).size.height * 0.15,
-            width: double.infinity,
-            decoration: BoxDecoration(
-                color: Colors.white,
-                boxShadow: [
-                  BoxShadow(
-                    color: Colors.grey.withOpacity(0.5),
-                    spreadRadius: 2,
-                    blurRadius: 3,
-                    offset: Offset(0, 3), // changes position of shadow
-                  ),
-                ],
-                borderRadius: BorderRadius.circular(0.6)),
-            child: Stack(
-              children: [
-                Positioned(
-                    top: 10,
-                    left: 10,
-                    child: GestureDetector(
-                      child: Icon(Icons.arrow_back),
-                      onTap: () {
-                        Navigator.pop(context);
-                      },
-                    )),
-                Positioned(
-                  
-                  child: Center(
-                    child: Text(
-                      appDataProvider.searchProductName,
-                      style: TextStyle(
-                          color: Colors.green,
-                          fontWeight: FontWeight.w700,
-                          fontSize: 20),
+              height: MediaQuery.of(context).size.height * 0.15,
+              width: double.infinity,
+              decoration: BoxDecoration(
+                  color: Colors.white,
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.grey.withOpacity(0.5),
+                      spreadRadius: 2,
+                      blurRadius: 3,
+                      offset: Offset(0, 3), // changes position of shadow
                     ),
-                  ),
+                  ],
+                  borderRadius: BorderRadius.circular(0.6)),
+              child: Center(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    Center(
+                      child: Text(
+                        appDataProvider.searchProductName,
+                        style: TextStyle(
+                            color: Colors.green,
+                            fontWeight: FontWeight.w700,
+                            fontSize: 20),
+                      ),
+                    ),
+                    Divider(
+                      color: Colors.black12,
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        FlatButton.icon(
+                            onPressed: () {
+                              Navigator.pop(context);
+                            },
+                            icon: Icon(Icons.arrow_back),
+                            label: Text('New',
+                                style: TextStyle(
+                                    color: Colors.black,
+                                    fontWeight: FontWeight.w600,
+                                    fontSize: 20))),
+                        FlatButton.icon(
+                            onPressed: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => FilteredScreen()),
+                              );
+                            },
+                            icon: Icon(Icons.wrap_text),
+                            label: Text('Filter',
+                                style: TextStyle(
+                                    color: Colors.redAccent,
+                                    fontWeight: FontWeight.w600,
+                                    fontSize: 20))),
+                        FlatButton.icon(
+                            onPressed: () => _pressedSortButton(),
+                            icon: Icon(Icons.sort),
+                            label: Text('Sort',
+                                style: TextStyle(
+                                    color: Colors.blueAccent,
+                                    fontWeight: FontWeight.w600,
+                                    fontSize: 20)))
+                      ],
+                    )
+                  ],
                 ),
-                Positioned(
-                  bottom: 5,
-                  right: 100,
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      FlatButton.icon(
-                          onPressed: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => FilteredScreen()),
-                            );
-                          },
-                          icon: Icon(Icons.wrap_text),
-                          label: Text('Filter',
-                              style: TextStyle(
-                                  color: Colors.redAccent,
-                                  fontWeight: FontWeight.w600,
-                                  fontSize: 20))),
-                      FlatButton.icon(
-                          onPressed: () => _pressedSortButton(),
-                          icon: Icon(Icons.sort),
-                          label: Text('Sort',
-                              style: TextStyle(
-                                  color: Colors.blueAccent,
-                                  fontWeight: FontWeight.w600,
-                                  fontSize: 20)))
-                    ],
-                  ),
-                )
-              ],
-            ),
-          ),
+              )),
         ),
         Consumer<AppData>(
           builder: (context, products, ch) {
