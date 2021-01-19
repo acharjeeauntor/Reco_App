@@ -1,7 +1,9 @@
+import 'package:connectivity/connectivity.dart';
 import 'package:provider/provider.dart';
 import 'package:reco_app/index.dart';
 import 'package:reco_app/providers/appData.dart';
-import 'package:reco_app/screens/ErrorScreen.dart';
+
+import 'ConnectionLostScreen.dart';
 
 class FilteredScreen extends StatefulWidget {
   @override
@@ -136,20 +138,29 @@ class _FilteredScreenState extends State<FilteredScreen> {
             width: MediaQuery.of(context).size.width,
             child: RaisedButton(
               color: Theme.of(context).accentColor,
-              onPressed: () {
-//                print("Rating:$rating");
-//                print("Price:$price");
-
-                appDataProvider.fetchProductsByFilter(
-                    appDataProvider.productName,
-                    price.toString(),
-                    rating.toString(),
-                    appDataProvider.getCategory);
-                if (appDataProvider.serverError) {
-                  Navigator.pushReplacement(context,
-                      MaterialPageRoute(builder: (context) => ErrorScreen()));
+              onPressed: () async {
+                var connectivityResult =
+                    await (Connectivity().checkConnectivity());
+                if (connectivityResult == ConnectivityResult.mobile ||
+                    connectivityResult == ConnectivityResult.wifi) {
+                  appDataProvider.fetchProductsByFilter(
+                      appDataProvider.productName,
+                      price.toString(),
+                      rating.toString(),
+                      appDataProvider.getCategory);
+                  if (appDataProvider.serverError) {
+                    Navigator.pushReplacement(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => ConnectionLostScreen()));
+                  }
+                  Navigator.pop(context);
+                } else {
+                  Navigator.pushReplacement(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => ConnectionLostScreen()));
                 }
-                Navigator.pop(context);
               },
               child: Padding(
                 padding: const EdgeInsets.all(8.0),

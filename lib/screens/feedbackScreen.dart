@@ -1,9 +1,12 @@
+import 'package:connectivity/connectivity.dart';
 import 'package:email_validator/email_validator.dart';
 import 'package:flutter/services.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:provider/provider.dart';
 import 'package:reco_app/index.dart';
 import 'package:reco_app/providers/appData.dart';
+
+import 'ConnectionLostScreen.dart';
 
 class FeedbackScreen extends StatefulWidget {
   @override
@@ -17,23 +20,31 @@ class _FeedbackScreenState extends State<FeedbackScreen> {
     TextEditingController _messageController = new TextEditingController();
 
     final appDataProvider = Provider.of<AppData>(context, listen: false);
-    void saveFeedback() {
-      final bool isValid = EmailValidator.validate(_emailController.text);
-      if (_emailController.text.isEmpty || _messageController.text.isEmpty) {
-        buildShowToast("Email and Feedback Required");
-      } else if (isValid == false) {
-        buildShowToast("Invalid Email");
+    void saveFeedback() async {
+      var connectivityResult = await (Connectivity().checkConnectivity());
+      if (connectivityResult == ConnectivityResult.mobile ||
+          connectivityResult == ConnectivityResult.wifi) {
+        final bool isValid = EmailValidator.validate(_emailController.text);
+        if (_emailController.text.isEmpty || _messageController.text.isEmpty) {
+          buildShowToast("Email and Feedback Required");
+        } else if (isValid == false) {
+          buildShowToast("Invalid Email");
+        } else {
+          appDataProvider
+              .insertFeedback(
+                  email: _emailController.text,
+                  feedback: _messageController.text)
+              .then((x) {
+            buildShowToast(x);
+          });
+          setState(() {
+            _emailController.clear();
+            _messageController.clear();
+          });
+        }
       } else {
-        appDataProvider
-            .insertFeedback(
-                email: _emailController.text, feedback: _messageController.text)
-            .then((x) {
-          buildShowToast(x);
-        });
-        setState(() {
-          _emailController.clear();
-          _messageController.clear();
-        });
+        Navigator.pushReplacement(context,
+            MaterialPageRoute(builder: (context) => ConnectionLostScreen()));
       }
     }
 

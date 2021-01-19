@@ -1,10 +1,9 @@
 import 'package:provider/provider.dart';
-//import 'package:reco_app/screens/InternetConnectionScreen.dart';
-import 'package:reco_app/widgets/dashboardnavigation.dart';
 
 import 'index.dart';
 import 'mycolors.dart';
 import 'providers/appData.dart';
+import 'screens/LeadingScreen.dart';
 
 void main() {
   runApp(MyApp());
@@ -30,7 +29,7 @@ class MyApp extends StatelessWidget {
                     TextStyle(fontSize: 36.0, fontStyle: FontStyle.italic),
                 bodyText2: TextStyle(fontSize: 14.0, fontFamily: 'Hindi'),
               )),
-          home: SafeArea(child: DashboardNavigation())),
+          home: SafeArea(child: LeadingScreen())),
     );
     //home: SafeArea(child: SearchScreen()));
   }
