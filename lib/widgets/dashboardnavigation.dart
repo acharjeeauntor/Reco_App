@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-import 'package:reco_app/providers/appData.dart';
 import 'package:reco_app/screens/SearchScreen.dart';
 import 'package:reco_app/screens/settingsScreen.dart';
 
@@ -16,9 +14,17 @@ class _DashboardNavigationState extends State<DashboardNavigation> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    final appDataProvider = Provider.of<AppData>(context, listen: false);
-    appDataProvider.fetchCategory();
-    print("fetchCategory work");
+    // Connectivity().onConnectivityChanged.listen((ConnectivityResult result) {
+    //   if (result != ConnectivityResult.mobile ||
+    //       result != ConnectivityResult.wifi) {
+    //     Navigator.pushReplacement(
+    //         context, MaterialPageRoute(builder: (context) => ErrorScreen()));
+    //   } else {
+    //     final appDataProvider = Provider.of<AppData>(context, listen: false);
+    //     appDataProvider.fetchCategory();
+    //     print("fetchCategory work");
+    //   }
+    // });
   }
 
   final List<Map<String, Object>> _pages = [
