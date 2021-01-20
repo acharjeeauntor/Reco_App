@@ -2,18 +2,15 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
-import 'package:reco_app/models/Category.dart';
 import 'package:reco_app/models/HintProduct.dart';
 import 'package:reco_app/models/Products.dart';
 
 class AppData with ChangeNotifier {
   var productName = '';
-  var productCategory = '';
   bool isLoading = true;
   bool isError = false;
 
   List<Products> _productsList = [];
-  List<String> _categoryList = [];
   List<String> _hintProductsList = [];
 
   //Set isLoading With true or false
@@ -22,10 +19,10 @@ class AppData with ChangeNotifier {
   bool get serverError => isError;
 
   // search [post] product by product name & category and add them on our local List
-  Future<void> fetchProducts({String pName, String category}) async {
+  Future<void> fetchProducts({String pName}) async {
     try {
-      final response = await http.post("http://10.0.2.2:5000/search",
-          body: {"name": pName, "ctg": category});
+      final response =
+          await http.post("http://10.0.2.2:5000/search", body: {"name": pName});
       var responseData = json.decode(response.body);
       if (response.statusCode == 200) {
         _productsList.clear();
@@ -44,17 +41,16 @@ class AppData with ChangeNotifier {
   }
 
   // search [post] product using Filtering and add them on our local List
-  Future<void> fetchProductsByFilter(String productName, String productPrice,
-      String productRating, String productCategory) async {
+  Future<void> fetchProductsByFilter(
+      String productName, String productPrice, String productRating) async {
 //    print("fetchProductsByFilter work");
     try {
-      final response =
-          await http.post("http://10.0.2.2:5000/search/filter", body: {
-        "name": productName,
-        "ctg": productCategory,
-        "price": productPrice,
-        "rating": productRating
-      });
+      final response = await http.post("http://10.0.2.2:5000/search/filter",
+          body: {
+            "name": productName,
+            "price": productPrice,
+            "rating": productRating
+          });
       var responseData = json.decode(response.body);
 //      print("fetchProductsByFilter $responseData");
       if (response.statusCode == 200) {
@@ -74,12 +70,11 @@ class AppData with ChangeNotifier {
   }
 
   // sort product by rating and add them on our local List
-  Future<void> sortProductByRating(
-      String productName, String productCategory) async {
+  Future<void> sortProductByRating(String productName) async {
 //    print("fetchProductsByFilter work");
     try {
       final response = await http.post("http://10.0.2.2:5000/search/rating",
-          body: {"name": productName, "ctg": productCategory});
+          body: {"name": productName});
       var responseData = json.decode(response.body);
 //      print("fetchProductsByFilter $responseData");
       if (response.statusCode == 200) {
@@ -99,12 +94,11 @@ class AppData with ChangeNotifier {
   }
 
   // sort product by price and add them on our local List
-  Future<void> sortProductByPrice(
-      String productName, String productCategory) async {
+  Future<void> sortProductByPrice(String productName) async {
 //    print("fetchProductsByFilter work");
     try {
       final response = await http.post("http://10.0.2.2:5000/search/price",
-          body: {"name": productName, "ctg": productCategory});
+          body: {"name": productName});
       var responseData = json.decode(response.body);
 //      print("fetchProductsByFilter $responseData");
       if (response.statusCode == 200) {
@@ -135,53 +129,13 @@ class AppData with ChangeNotifier {
     notifyListeners();
   }
 
-  // Store Category
-  Future<void> addCategoryName(String category) {
-    productCategory = category;
-    notifyListeners();
-  }
-
   // show [get] product name
   String get searchProductName => productName;
 
-  // show [get] category
-  String get getCategory => productCategory;
-
-  //get all category from server side or database and add them on our local List
-  Future<void> fetchCategory() async {
-//    print("fetchCategory work");
-    try {
-      final response = await http.get("http://10.0.2.2:5000/catagory");
-      var responseData = json.decode(response.body);
-      if (response.statusCode == 200) {
-        _categoryList.clear();
-        if (responseData == null) {
-          return;
-        } else {
-          for (var data in responseData) {
-            _categoryList.add(Category.fromJson(data).categoryname);
-          }
-          notifyListeners();
-        }
-      } else if (response.statusCode == 400) {
-        isError = true;
-      }
-    } catch (error) {
-      throw error;
-    }
-  }
-
-  //Access [get] Category List Format
-  List<String> get categoryList {
-    return [..._categoryList];
-  }
-
   //get all product for hint and add them on our local List
-  Future<void> fetchProductForHint(String category) async {
+  Future<void> fetchProductForHint() async {
     try {
-      final response = await http.post(
-          "http://10.0.2.2:5000/search/category/product",
-          body: {"ctg": category.toString()});
+      final response = await http.get("http://10.0.2.2:5000/product");
       var responseData = json.decode(response.body);
       if (response.statusCode == 200) {
         _hintProductsList.clear();
@@ -205,10 +159,10 @@ class AppData with ChangeNotifier {
     }
   }
 
-  //Access [get] Hint Product on List Format
-  List<String> get hintProductsList {
-    return [..._hintProductsList];
-  }
+  // //Access [get] Hint Product on List Format
+  // List<String> get hintProductsList {
+  //   return [..._hintProductsList];
+  // }
 
   //Product List for typeahead pattern
   fetchProductFromPattern(String word) {

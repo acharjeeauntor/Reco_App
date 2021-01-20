@@ -303,7 +303,7 @@ class _MainScreen extends State<MainScreen> {
               selectedRadio = 1;
               sortType = 'ourrecommendations';
               appData.fetchProducts(
-                  pName: appData.productName, category: appData.getCategory);
+                  pName: appData.productName);
               Navigator.pop(context);
             })
           },
@@ -311,7 +311,7 @@ class _MainScreen extends State<MainScreen> {
           leading: Radio(
             onChanged: (val) {
               appData.fetchProducts(
-                  pName: appData.productName, category: appData.getCategory);
+                  pName: appData.productName);
             },
             activeColor: Colors.blueAccent,
             value: 1,
@@ -324,7 +324,7 @@ class _MainScreen extends State<MainScreen> {
               selectedRadio = 2;
               sortType = 'price';
               appData.sortProductByPrice(
-                  appData.productName, appData.getCategory);
+                  appData.productName);
               Navigator.pop(context);
             })
           },
@@ -332,7 +332,7 @@ class _MainScreen extends State<MainScreen> {
           leading: Radio(
             onChanged: (val) {
               appData.sortProductByPrice(
-                  appData.productName, appData.getCategory);
+                  appData.productName);
             },
             activeColor: Colors.blueAccent,
             value: 2,
@@ -345,7 +345,7 @@ class _MainScreen extends State<MainScreen> {
               selectedRadio = 3;
               sortType = 'rating';
               appData.sortProductByRating(
-                  appData.productName, appData.getCategory);
+                  appData.productName);
               Navigator.pop(context);
             })
           },
@@ -356,7 +356,7 @@ class _MainScreen extends State<MainScreen> {
             groupValue: selectedRadio,
             onChanged: (val) {
               appData.sortProductByRating(
-                  appData.productName, appData.getCategory);
+                  appData.productName);
             },
           ),
         ),

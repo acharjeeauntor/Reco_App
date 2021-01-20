@@ -1,4 +1,8 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:reco_app/providers/appData.dart';
 import 'package:reco_app/screens/SearchScreen.dart';
 import 'package:reco_app/screens/settingsScreen.dart';
 
@@ -14,17 +18,10 @@ class _DashboardNavigationState extends State<DashboardNavigation> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    // Connectivity().onConnectivityChanged.listen((ConnectivityResult result) {
-    //   if (result != ConnectivityResult.mobile ||
-    //       result != ConnectivityResult.wifi) {
-    //     Navigator.pushReplacement(
-    //         context, MaterialPageRoute(builder: (context) => ErrorScreen()));
-    //   } else {
-    //     final appDataProvider = Provider.of<AppData>(context, listen: false);
-    //     appDataProvider.fetchCategory();
-    //     print("fetchCategory work");
-    //   }
-    // });
+    Timer.run(() {
+      final appDataProvider = Provider.of<AppData>(context, listen: false);
+      appDataProvider.fetchProductForHint();
+    });
   }
 
   final List<Map<String, Object>> _pages = [
@@ -53,9 +50,13 @@ class _DashboardNavigationState extends State<DashboardNavigation> {
           onTap: _selectPage,
           items: [
             BottomNavigationBarItem(
-                icon: const Icon(Icons.search), title: const Text('Search')),
+                // ignore: deprecated_member_use
+                icon: const Icon(Icons.search),
+                title: const Text('Search')),
             BottomNavigationBarItem(
-                icon: const Icon(Icons.settings), title: const Text('Setting'))
+                // ignore: deprecated_member_use
+                icon: const Icon(Icons.settings),
+                title: const Text('Setting'))
           ]),
     );
   }

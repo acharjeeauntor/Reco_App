@@ -146,8 +146,7 @@ class _FilteredScreenState extends State<FilteredScreen> {
                   appDataProvider.fetchProductsByFilter(
                       appDataProvider.productName,
                       price.toString(),
-                      rating.toString(),
-                      appDataProvider.getCategory);
+                      rating.toString());
                   if (appDataProvider.serverError) {
                     Navigator.pushReplacement(
                         context,

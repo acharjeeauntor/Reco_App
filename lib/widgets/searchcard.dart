@@ -1,5 +1,4 @@
 import 'package:connectivity/connectivity.dart';
-import 'package:dropdownfield/dropdownfield.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_typeahead/flutter_typeahead.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -15,7 +14,6 @@ class Searchcard extends StatefulWidget {
 }
 
 class _SearchcardState extends State<Searchcard> {
-  TextEditingController _categoryController = new TextEditingController();
   TextEditingController _productController = new TextEditingController();
 
   //String _selectProduct = "";
@@ -26,7 +24,7 @@ class _SearchcardState extends State<Searchcard> {
     return Consumer<AppData>(
       builder: (context, appData, ch) {
         return Container(
-          height: MediaQuery.of(context).size.height * 0.35,
+          height: MediaQuery.of(context).size.height * 0.22,
           width: MediaQuery.of(context).size.width * 0.9,
           decoration: BoxDecoration(
             color: Colors.white,
@@ -41,25 +39,25 @@ class _SearchcardState extends State<Searchcard> {
             ],
           ),
           child: Padding(
-            padding: const EdgeInsets.all(8.0),
+            padding: const EdgeInsets.all(10.0),
             child: SingleChildScrollView(
               child: Column(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  categoryDropdown(appData),
-                  SizedBox(
-                    height: 20,
-                  ),
                   TypeAheadField(
+                    hideOnLoading: true,
                     hideOnEmpty: true,
                     getImmediateSuggestions: true,
                     textFieldConfiguration: TextFieldConfiguration(
+                        autocorrect: true,
+                        autofocus: true,
                         controller: _productController,
                         style: DefaultTextStyle.of(context)
                             .style
                             .copyWith(fontStyle: FontStyle.italic),
-                        decoration:
-                            InputDecoration(border: OutlineInputBorder())),
+                        decoration: InputDecoration(
+                            border: OutlineInputBorder(),
+                            labelText: "Enter Product Name")),
                     suggestionsCallback: (pattern) async {
                       //print("pattern $pattern");
                       return appData.fetchProductFromPattern(pattern);
@@ -88,22 +86,6 @@ class _SearchcardState extends State<Searchcard> {
     );
   }
 
-  DropDownField categoryDropdown(AppData appData) {
-    //print(appDataProvider.categoryList.length);
-    return DropDownField(
-      controller: _categoryController,
-      onValueChanged: (dynamic value) {
-        appData.fetchProductForHint(value);
-        // _categoryController = value;
-      },
-      value: _categoryController.text,
-      hintText: 'Choose a category',
-      items: appData.categoryList,
-      enabled: true,
-      itemsVisibleInDropdown: appData.categoryList.length,
-    );
-  }
-
   GestureDetector searchButton(BuildContext context) {
     // checkStatus() {
     //   Connectivity().onConnectivityChanged.listen((ConnectivityResult result) {
@@ -122,20 +104,16 @@ class _SearchcardState extends State<Searchcard> {
         var connectivityResult = await (Connectivity().checkConnectivity());
         if (connectivityResult == ConnectivityResult.mobile ||
             connectivityResult == ConnectivityResult.wifi) {
-          if (_productController.text.isEmpty ||
-              _categoryController.text.isEmpty) {
+          if (_productController.text.isEmpty) {
             Fluttertoast.showToast(
-                msg: "Category And Name Required",
+                msg: "Product Name Required",
                 toastLength: Toast.LENGTH_LONG,
                 backgroundColor: Colors.red,
                 textColor: Colors.white,
                 fontSize: 16.0);
           } else {
-            appDataProvider.fetchProducts(
-                pName: _productController.text,
-                category: _categoryController.text);
+            appDataProvider.fetchProducts(pName: _productController.text);
             appDataProvider.addProductName(_productController.text);
-            appDataProvider.addCategoryName(_categoryController.text);
             if (appDataProvider.serverError) {
               Navigator.pushReplacement(
                   context,
@@ -145,7 +123,6 @@ class _SearchcardState extends State<Searchcard> {
 
 //        print(_categoryController.text);
 //        print(_suggestionTextFieldController.text);
-            _categoryController.clear();
             _productController.text = "";
 
             print("Search");
@@ -160,7 +137,6 @@ class _SearchcardState extends State<Searchcard> {
         }
       },
       child: Container(
-        margin: EdgeInsets.only(left: 10, right: 10),
         height: MediaQuery.of(context).size.height * 0.07,
         width: double.infinity,
         decoration: BoxDecoration(
