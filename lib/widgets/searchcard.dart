@@ -45,12 +45,9 @@ class _SearchcardState extends State<Searchcard> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   TypeAheadField(
-                    hideOnLoading: true,
                     hideOnEmpty: true,
                     getImmediateSuggestions: true,
                     textFieldConfiguration: TextFieldConfiguration(
-                        autocorrect: true,
-                        autofocus: true,
                         controller: _productController,
                         style: DefaultTextStyle.of(context)
                             .style

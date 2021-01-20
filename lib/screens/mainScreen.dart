@@ -79,6 +79,7 @@ class _MainScreen extends State<MainScreen> {
                         FlatButton.icon(
                             onPressed: () {
                               Navigator.pop(context);
+                              appDataProvider.clearLists();
                             },
                             icon: Icon(Icons.arrow_back),
                             label: Text('New',
@@ -302,16 +303,14 @@ class _MainScreen extends State<MainScreen> {
             setState(() {
               selectedRadio = 1;
               sortType = 'ourrecommendations';
-              appData.fetchProducts(
-                  pName: appData.productName);
+              appData.ourRecommanded();
               Navigator.pop(context);
             })
           },
           title: const Text('Our Recommendations'),
           leading: Radio(
             onChanged: (val) {
-              appData.fetchProducts(
-                  pName: appData.productName);
+              appData.ourRecommanded();
             },
             activeColor: Colors.blueAccent,
             value: 1,
@@ -323,16 +322,14 @@ class _MainScreen extends State<MainScreen> {
             setState(() {
               selectedRadio = 2;
               sortType = 'price';
-              appData.sortProductByPrice(
-                  appData.productName);
+              appData.sortProductByPrice();
               Navigator.pop(context);
             })
           },
           title: const Text('Price Only'),
           leading: Radio(
             onChanged: (val) {
-              appData.sortProductByPrice(
-                  appData.productName);
+              appData.sortProductByPrice();
             },
             activeColor: Colors.blueAccent,
             value: 2,
@@ -344,8 +341,7 @@ class _MainScreen extends State<MainScreen> {
             setState(() {
               selectedRadio = 3;
               sortType = 'rating';
-              appData.sortProductByRating(
-                  appData.productName);
+              appData.sortProductByRating();
               Navigator.pop(context);
             })
           },
@@ -355,8 +351,7 @@ class _MainScreen extends State<MainScreen> {
             value: 3,
             groupValue: selectedRadio,
             onChanged: (val) {
-              appData.sortProductByRating(
-                  appData.productName);
+              appData.sortProductByRating();
             },
           ),
         ),

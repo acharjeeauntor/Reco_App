@@ -11,12 +11,19 @@ class AppData with ChangeNotifier {
   bool isError = false;
 
   List<Products> _productsList = [];
+  List<Products> _oldProductsList = [];
   List<String> _hintProductsList = [];
 
   //Set isLoading With true or false
   bool get indicator => isLoading;
 
   bool get serverError => isError;
+
+  void clearLists() {
+    _productsList.clear();
+    _oldProductsList.clear();
+    productName = ' ';
+  }
 
   // search [post] product by product name & category and add them on our local List
   Future<void> fetchProducts({String pName}) async {
@@ -26,9 +33,11 @@ class AppData with ChangeNotifier {
       var responseData = json.decode(response.body);
       if (response.statusCode == 200) {
         _productsList.clear();
+        _oldProductsList.clear();
         //notify income list widget
         for (var data in responseData) {
           _productsList.add(Products.fromJson(data));
+          _oldProductsList.add(Products.fromJson(data));
         }
         isLoading = false;
         notifyListeners();
@@ -70,51 +79,26 @@ class AppData with ChangeNotifier {
   }
 
   // sort product by rating and add them on our local List
-  Future<void> sortProductByRating(String productName) async {
-//    print("fetchProductsByFilter work");
-    try {
-      final response = await http.post("http://10.0.2.2:5000/search/rating",
-          body: {"name": productName});
-      var responseData = json.decode(response.body);
-//      print("fetchProductsByFilter $responseData");
-      if (response.statusCode == 200) {
-        _productsList.clear();
-        //notify income list widget
-        for (var data in responseData) {
-          _productsList.add(Products.fromJson(data));
-        }
-        isLoading = false;
-        notifyListeners();
-      } else if (response.statusCode == 400) {
-        isError = true;
-      }
-    } catch (error) {
-      throw error;
-    }
+  void sortProductByRating() {
+    // print("SortByRating: $_productsList");
+    Comparator<Products> sortByRating = (a, b) => b.rating.compareTo(a.rating);
+    _productsList.sort(sortByRating);
+    notifyListeners();
+  }
+
+  void ourRecommanded() {
+    // print("Our recoman: $_productsList");
+    _productsList.clear();
+    _productsList.addAll(_oldProductsList);
+    notifyListeners();
   }
 
   // sort product by price and add them on our local List
-  Future<void> sortProductByPrice(String productName) async {
-//    print("fetchProductsByFilter work");
-    try {
-      final response = await http.post("http://10.0.2.2:5000/search/price",
-          body: {"name": productName});
-      var responseData = json.decode(response.body);
-//      print("fetchProductsByFilter $responseData");
-      if (response.statusCode == 200) {
-        _productsList.clear();
-        //notify income list widget
-        for (var data in responseData) {
-          _productsList.add(Products.fromJson(data));
-        }
-        isLoading = false;
-        notifyListeners();
-      } else if (response.statusCode == 400) {
-        isError = true;
-      }
-    } catch (error) {
-      throw error;
-    }
+  void sortProductByPrice() {
+    // print("SortByPrice: $_productsList");
+    Comparator<Products> sortByPrice = (a, b) => a.price.compareTo(b.price);
+    _productsList.sort(sortByPrice);
+    notifyListeners();
   }
 
   //Access [get] search Products List Format
