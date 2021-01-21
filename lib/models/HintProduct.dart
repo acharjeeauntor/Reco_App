@@ -8,16 +8,16 @@ String hintProductToJson(List<HintProduct> data) =>
 
 class HintProduct {
   HintProduct({
-    this.itemName,
+    this.product_name,
   });
 
-  String itemName;
+  String product_name;
 
   factory HintProduct.fromJson(Map<String, dynamic> json) => HintProduct(
-        itemName: json["item_name"],
+        product_name: json["product_name"],
       );
 
   Map<String, dynamic> toJson() => {
-        "item_name": itemName,
+        "product_name": product_name,
       };
 }

@@ -8,36 +8,40 @@ String productsToJson(List<Products> data) =>
 
 class Products {
   Products({
-    this.itemName,
-    this.siteImageUrl,
+    this.product_name,
+    this.product_image_url,
     this.price,
     this.rating,
-    this.productUrl,
-    this.site,
+    this.review,
+    this.Product_url,
+    this.website_name,
   });
 
-  String itemName;
-  String siteImageUrl;
+  String product_name;
+  String product_image_url;
   int price;
   int rating;
-  String productUrl;
-  String site;
+  int review;
+  String Product_url;
+  String website_name;
 
   factory Products.fromJson(Map<String, dynamic> json) => Products(
-        itemName: json["item_name"],
-        siteImageUrl: json["site_image_url"],
+        product_name: json["product_name"],
+        product_image_url: json["product_image_url"],
         price: json["price"],
         rating: json["rating"],
-        productUrl: json["Product_url"],
-        site: json["site"],
+        review: json["review"],
+        Product_url: json["Product_url"],
+        website_name: json["website_name"],
       );
 
   Map<String, dynamic> toJson() => {
-        "item_name": itemName,
-        "site_image_url": siteImageUrl,
+        "product_name": product_name,
+        "product_image_url": product_image_url,
         "price": price,
         "rating": rating,
-        "Product_url": productUrl,
-        "site": site,
+        "review": review,
+        "Product_url": Product_url,
+        "website_name": website_name,
       };
 }

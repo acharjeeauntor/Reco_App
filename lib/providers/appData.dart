@@ -49,33 +49,18 @@ class AppData with ChangeNotifier {
     }
   }
 
-  // search [post] product using Filtering and add them on our local List
-  Future<void> fetchProductsByFilter(
-      String productName, String productPrice, String productRating) async {
-//    print("fetchProductsByFilter work");
-    try {
-      final response = await http.post("http://10.0.2.2:5000/search/filter",
-          body: {
-            "name": productName,
-            "price": productPrice,
-            "rating": productRating
-          });
-      var responseData = json.decode(response.body);
-//      print("fetchProductsByFilter $responseData");
-      if (response.statusCode == 200) {
-        _productsList.clear();
-        //notify income list widget
-        for (var data in responseData) {
-          _productsList.add(Products.fromJson(data));
-        }
-        isLoading = false;
-        notifyListeners();
-      } else if (response.statusCode == 400) {
-        isError = true;
-      }
-    } catch (error) {
-      throw error;
-    }
+  void filterProduct(String productPrice, String productRating) {
+    List<Products> filteredProduct = _oldProductsList
+        .where((element) =>
+            (element.price <= int.parse(productPrice)) &&
+            (element.rating >= int.parse(productRating)))
+        .toList();
+    print("filtered $filteredProduct");
+    _productsList.clear();
+    _productsList.addAll(filteredProduct);
+    filteredProduct.clear();
+    print("ProductList $_productsList");
+    notifyListeners();
   }
 
   // sort product by rating and add them on our local List
@@ -131,7 +116,7 @@ class AppData with ChangeNotifier {
             print("Data $data");
 
             _hintProductsList
-                .add(HintProduct.fromJson(data).itemName.toString());
+                .add(HintProduct.fromJson(data).product_name.toString());
           }
           notifyListeners();
         }

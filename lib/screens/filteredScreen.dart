@@ -143,10 +143,8 @@ class _FilteredScreenState extends State<FilteredScreen> {
                     await (Connectivity().checkConnectivity());
                 if (connectivityResult == ConnectivityResult.mobile ||
                     connectivityResult == ConnectivityResult.wifi) {
-                  appDataProvider.fetchProductsByFilter(
-                      appDataProvider.productName,
-                      price.toString(),
-                      rating.toString());
+                  appDataProvider.filterProduct(
+                      price.toString(), rating.toString());
                   if (appDataProvider.serverError) {
                     Navigator.pushReplacement(
                         context,

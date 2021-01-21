@@ -148,9 +148,12 @@ class _MainScreen extends State<MainScreen> {
                                                 topLeft: Radius.circular(15),
                                                 topRight: Radius.circular(15),
                                               ),
-                                              child: Image.network(
-                                                products.productsList[index]
-                                                    .siteImageUrl,
+                                              child: FadeInImage.assetNetwork(
+                                                placeholder:
+                                                    'assets/images/placeholder.jpg',
+                                                image: products
+                                                    .productsList[index]
+                                                    .product_image_url,
                                                 height: 250,
                                                 width: double.infinity,
                                                 fit: BoxFit.cover,
@@ -167,7 +170,7 @@ class _MainScreen extends State<MainScreen> {
                                               ),
                                               child: Text(
                                                 products.productsList[index]
-                                                    .itemName,
+                                                    .product_name,
                                                 style: TextStyle(
                                                     fontSize: 22,
                                                     fontWeight: FontWeight.bold,
@@ -188,8 +191,8 @@ class _MainScreen extends State<MainScreen> {
                                                 horizontal: 20,
                                               ),
                                               child: Text(
-                                                products
-                                                    .productsList[index].site,
+                                                products.productsList[index]
+                                                    .website_name,
                                                 style: TextStyle(
                                                     fontSize: 20,
                                                     color: Colors.white),
@@ -209,9 +212,7 @@ class _MainScreen extends State<MainScreen> {
                                               padding: EdgeInsets.symmetric(
                                                   horizontal: 10, vertical: 1),
                                               child: Text(
-                                                products
-                                                    .productsList[index].rating
-                                                    .toString(),
+                                                "${products.productsList[index].rating.toString()} Rating",
                                                 style: TextStyle(
                                                     fontSize: 15,
                                                     color: Colors.white),
@@ -222,14 +223,17 @@ class _MainScreen extends State<MainScreen> {
                                           ),
                                           Positioned(
                                             top: 20,
-                                            left: 35,
+                                            right: 35,
                                             child: Container(
+                                              decoration: BoxDecoration(
+                                                  borderRadius:
+                                                      BorderRadius.circular(5),
+                                                  color: Colors.purple),
                                               padding: EdgeInsets.symmetric(
                                                   horizontal: 10, vertical: 1),
                                               child: Text(
-                                                "5 reviews",
+                                                "${products.productsList[index].review.toString()} Review",
                                                 style: TextStyle(
-                                                    fontWeight: FontWeight.bold,
                                                     fontSize: 15,
                                                     color: Colors.white),
                                                 softWrap: true,
@@ -261,7 +265,7 @@ class _MainScreen extends State<MainScreen> {
                                               onTap: () {
                                                 launchURL(products
                                                     .productsList[index]
-                                                    .productUrl);
+                                                    .Product_url);
                                               },
                                               child: Row(
                                                 children: <Widget>[
