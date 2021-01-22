@@ -1,8 +1,4 @@
-import 'dart:async';
-
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-import 'package:reco_app/providers/appData.dart';
 import 'package:reco_app/screens/SearchScreen.dart';
 import 'package:reco_app/screens/settingsScreen.dart';
 
@@ -14,16 +10,6 @@ class DashboardNavigation extends StatefulWidget {
 }
 
 class _DashboardNavigationState extends State<DashboardNavigation> {
-  @override
-  void initState() {
-    // TODO: implement initState
-    super.initState();
-    Timer.run(() {
-      final appDataProvider = Provider.of<AppData>(context, listen: false);
-      appDataProvider.fetchProductForHint();
-    });
-  }
-
   final List<Map<String, Object>> _pages = [
     {'page': SearchScreen(), 'title': 'Search'},
     {'page': SettingsScreen(), 'title': 'Settings'},

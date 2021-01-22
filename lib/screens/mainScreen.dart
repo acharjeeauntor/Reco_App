@@ -6,6 +6,8 @@ import 'package:reco_app/providers/appData.dart';
 import 'package:reco_app/screens/filteredScreen.dart';
 import 'package:url_launcher/url_launcher.dart';
 
+import 'NoResultFound.dart';
+
 class MainScreen extends StatefulWidget {
   @override
   _MainScreen createState() => _MainScreen();
@@ -125,7 +127,7 @@ class _MainScreen extends State<MainScreen> {
                   )
                 : Expanded(
                     child: products.productsList.length == 0
-                        ? Center(child: Text("No Product Found"))
+                        ? NoResultFoundScreen()
                         : ListView.builder(
                             scrollDirection: Axis.vertical,
                             shrinkWrap: true,

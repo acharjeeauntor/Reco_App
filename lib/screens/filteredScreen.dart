@@ -4,6 +4,7 @@ import 'package:reco_app/index.dart';
 import 'package:reco_app/providers/appData.dart';
 
 import 'ConnectionLostScreen.dart';
+import 'SomthingWrong.dart';
 
 class FilteredScreen extends StatefulWidget {
   @override
@@ -149,7 +150,7 @@ class _FilteredScreenState extends State<FilteredScreen> {
                     Navigator.pushReplacement(
                         context,
                         MaterialPageRoute(
-                            builder: (context) => ConnectionLostScreen()));
+                            builder: (context) => SomethingWentWrongScreen()));
                   }
                   Navigator.pop(context);
                 } else {

@@ -6,6 +6,7 @@ import 'package:provider/provider.dart';
 import 'package:reco_app/index.dart';
 import 'package:reco_app/providers/appData.dart';
 import 'package:reco_app/screens/ConnectionLostScreen.dart';
+import 'package:reco_app/screens/SomthingWrong.dart';
 import 'package:reco_app/screens/mainScreen.dart';
 
 class Searchcard extends StatefulWidget {
@@ -115,7 +116,7 @@ class _SearchcardState extends State<Searchcard> {
               Navigator.pushReplacement(
                   context,
                   MaterialPageRoute(
-                      builder: (context) => ConnectionLostScreen()));
+                      builder: (context) => SomethingWentWrongScreen()));
             }
 
 //        print(_categoryController.text);

@@ -26,7 +26,7 @@ class AppData with ChangeNotifier {
   }
 
   // search [post] product by product name & category and add them on our local List
-  Future<void> fetchProducts({String pName}) async {
+  void fetchProducts({String pName}) async {
     try {
       final response =
           await http.post("http://10.0.2.2:5000/search", body: {"name": pName});
@@ -41,10 +41,11 @@ class AppData with ChangeNotifier {
         }
         isLoading = false;
         notifyListeners();
-      } else if (response.statusCode == 400) {
+      } else if (response.statusCode == 500) {
         isError = true;
       }
     } catch (error) {
+      isError = true;
       throw error;
     }
   }
@@ -93,7 +94,7 @@ class AppData with ChangeNotifier {
   }
 
   // Add [post] Product name on result page
-  Future<void> addProductName(String name) {
+  void addProductName(String name) {
     productName = name;
     notifyListeners();
   }
@@ -102,7 +103,7 @@ class AppData with ChangeNotifier {
   String get searchProductName => productName;
 
   //get all product for hint and add them on our local List
-  Future<void> fetchProductForHint() async {
+  void fetchProductForHint() async {
     try {
       final response = await http.get("http://10.0.2.2:5000/product");
       var responseData = json.decode(response.body);
@@ -120,10 +121,11 @@ class AppData with ChangeNotifier {
           }
           notifyListeners();
         }
-      } else if (response.statusCode == 400) {
+      } else if (response.statusCode == 500) {
         isError = true;
       }
     } catch (error) {
+      isError = true;
       throw error;
     }
   }
