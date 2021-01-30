@@ -30,7 +30,7 @@ class _HelpCenterScreenState extends State<HelpCenterScreen> {
                         width: 60,
                         child: CircleAvatar(
                           radius: 50,
-                          backgroundImage: AssetImage('assets/images/logo.png'),
+                          backgroundImage: AssetImage('assets/images/logoNew.png'),
                         ),
                       ),
                       SizedBox(
