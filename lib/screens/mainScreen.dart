@@ -67,7 +67,7 @@ class _MainScreen extends State<MainScreen> {
                       child: Text(
                         appDataProvider.searchProductName,
                         style: TextStyle(
-                            color: Colors.green,
+                            color: Colors.purple,
                             fontWeight: FontWeight.w700,
                             fontSize: 20),
                       ),
@@ -230,7 +230,7 @@ class _MainScreen extends State<MainScreen> {
                                               decoration: BoxDecoration(
                                                   borderRadius:
                                                       BorderRadius.circular(5),
-                                                  color: Colors.purple),
+                                                  color: Colors.green),
                                               padding: EdgeInsets.symmetric(
                                                   horizontal: 10, vertical: 1),
                                               child: Text(
@@ -259,7 +259,7 @@ class _MainScreen extends State<MainScreen> {
                                                       fontWeight:
                                                           FontWeight.w800,
                                                       fontSize: 18,
-                                                      color: Colors.green),
+                                                      color: Colors.black),
                                                 ),
                                               ],
                                             ),

@@ -110,7 +110,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
           left: 70,
           child: RaisedButton(
               onPressed: () {},
-              color: Theme.of(context).accentColor,
+              color: Colors.indigoAccent,
               child: Text(
                 "CREATE ACCOUNT OR SIGN IN",
                 style: TextStyle(color: Colors.white),
