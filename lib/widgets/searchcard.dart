@@ -41,18 +41,16 @@ class _SearchcardState extends State<Searchcard> {
           ),
           child: Padding(
             padding: const EdgeInsets.all(10.0),
-            child: SingleChildScrollView(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  TypeAheadField(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Expanded(
+                  child: TypeAheadField(
                     hideOnEmpty: true,
                     getImmediateSuggestions: true,
                     textFieldConfiguration: TextFieldConfiguration(
                         controller: _productController,
-                        style: DefaultTextStyle.of(context)
-                            .style
-                            .copyWith(fontStyle: FontStyle.italic),
+                        style: DefaultTextStyle.of(context).style.copyWith(),
                         decoration: InputDecoration(
                             border: OutlineInputBorder(),
                             labelText: "Enter Product Name")),
@@ -71,12 +69,12 @@ class _SearchcardState extends State<Searchcard> {
                       _productController.text = suggestion;
                     },
                   ),
-                  SizedBox(
-                    height: 20,
-                  ),
-                  searchButton(context)
-                ],
-              ),
+                ),
+                SizedBox(
+                  height: 20,
+                ),
+                Expanded(child: searchButton(context))
+              ],
             ),
           ),
         );

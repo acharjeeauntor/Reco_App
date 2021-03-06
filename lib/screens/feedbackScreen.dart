@@ -62,29 +62,31 @@ class _FeedbackScreenState extends State<FeedbackScreen> {
           }),
         ],
       ),
-      body: Column(
-        children: [
-          Padding(
-            padding: const EdgeInsets.all(15.0),
-            child: TextFormField(
-              controller: _emailController,
-              decoration: InputDecoration(labelText: 'E-Mail'),
-              keyboardType: TextInputType.emailAddress,
-            ),
-          ),
-          Card(
-            color: Colors.white,
-            child: Padding(
-              padding: EdgeInsets.all(15.0),
-              child: TextField(
-                controller: _messageController,
-                maxLines: 10,
-                decoration: InputDecoration.collapsed(
-                    hintText: "Enter your feedback here"),
+      body: SingleChildScrollView(
+        child: Column(
+          children: [
+            Padding(
+              padding: const EdgeInsets.all(15.0),
+              child: TextFormField(
+                controller: _emailController,
+                decoration: InputDecoration(labelText: 'E-Mail'),
+                keyboardType: TextInputType.emailAddress,
               ),
             ),
-          ),
-        ],
+            Card(
+              color: Colors.white,
+              child: Padding(
+                padding: EdgeInsets.all(15.0),
+                child: TextField(
+                  controller: _messageController,
+                  maxLines: 10,
+                  decoration: InputDecoration.collapsed(
+                      hintText: "Enter your feedback here"),
+                ),
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }

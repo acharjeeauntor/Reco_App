@@ -30,12 +30,36 @@ class _LeadingScreenState extends State<LeadingScreen> {
     });
     return Scaffold(
       body: Center(
-        child: Image.asset(
-          "assets/images/logoNew.png",
-          height: 80,
-          width: 80,
-        ),
-      ),
+          child: Column(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Image.asset(
+            "assets/images/logoNew.png",
+            height: 80,
+            width: 80,
+          ),
+          SizedBox(
+            height: 10,
+          ),
+          Text.rich(
+            TextSpan(
+                text: "Re",
+                style: TextStyle(
+                    color: Colors.green,
+                    fontSize: 20,
+                    fontWeight: FontWeight.w700),
+                children: <TextSpan>[
+                  TextSpan(
+                      text: "Com",
+                      style: TextStyle(
+                          color: Colors.purpleAccent,
+                          fontSize: 20,
+                          fontWeight: FontWeight.w700))
+                ]),
+          )
+        ],
+      )),
     );
   }
 }
